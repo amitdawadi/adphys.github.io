@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 1000px; /* Changed from 800px based on CV container */
+      max-width: 1000px;
       margin: 40px auto;
       padding: 0 20px;
       background: #fafafa;
@@ -54,7 +54,7 @@
       border-radius: 10px;
       background-color: #fff;
     }
-    .cv-container hr { /* Specific to cv-container hr */
+    .cv-container hr {
       border: none;
       border-top: 2px solid #007BFF;
       margin: 20px 0;
@@ -84,24 +84,45 @@
       background-color: #0056b3;
     }
 
-    /* New classes for elements that had inline styles */
-    .contact-info {
-        text-align: center;
-        font-size: 20px;
+    /* New style for the container holding the image and button */
+    .button-and-image-container {
+      display: flex; /* Makes the items inside align horizontally */
+      align-items: center; /* Vertically aligns items in the middle */
+      justify-content: center; /* Horizontally centers the group */
+      gap: 15px; /* Adds space between the image and the button */
+      margin-bottom: 30px; /* Maintains spacing below this section */
     }
-    .inner-box {
-        max-width: 850px;
-        margin: auto;
-        padding: 20px;
-        border: 2px solid #007BFF;
-        border-radius: 10px;
-        background-color: #fff;
-        box-shadow: 2px 4px 8px rgba(0,0,0,0.1); /* Corrected box-shadow syntax */
+
+    .passport-image {
+      width: 80px; /* Adjust size as needed for a passport photo */
+      height: 80px; /* Keep aspect ratio square */
+      border-radius: 50%; /* Makes the image round */
+      object-fit: cover; /* Ensures the image covers the area without distortion */
+      border: 2px solid #007BFF; /* Optional: adds a border around the image */
     }
+
+    /* Styles for the inner content box within CV */
+    .inner-cv-content-box {
+      max-width: 850px;
+      margin: auto;
+      padding: 20px;
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Style for the blue horizontal rules */
     .blue-hr {
-        border: none;
-        border-top: 2px solid blue;
-        width: 100%;
+      border: none;
+      border-top: 2px solid blue;
+      width: 100%;
+    }
+
+    /* Style for the main contact information text */
+    .contact-info-text {
+      text-align: center;
+      font-size: 20px;
     }
 
   </style>
@@ -122,16 +143,17 @@
       <a href="https://amitdawadi.github.io/adphys.github.io/Contact.html">Contact</a>
     </nav>
 
-    <div class="button-links">
-      <a href="amit_cv-4.pdf" target="_blank">Download Amit_CV.pdf</a>
+    <div class="button-and-image-container">
+      <img src="your-passport-photo.jpg" alt="Amit Dawadi Passport Photo" class="passport-image">
+      <a href="amit_cv-4.pdf" target="_blank" class="download-button">Download Amit_CV.pdf</a>
     </div>
 
-    <div class="inner-box">
-        <p class="contact-info">
+    <div class="inner-cv-content-box">
+        <p class="contact-info-text">
             <strong>Amit Dawadi</strong> <br>Ph.D. Candidate in Physics | Clark University, Worcester, MA 01610, USA<br>
             Email: <a href="mailto:ADawadi@clarku.edu">ADawadi@clarku.edu</a> | Phone: +xxxxxxxxxx<br>
             ORCID: <a href="https://orcid.org/0009-0000-2934-3451">https://orcid.org/0009-0000-2934-3451</a> <br> LinkedIn: <a href="https://www.linkedin.com/in/amit-dawadi/">https://www.linkedin.com/in/amit-dawadi</a> <br> Google Scholar: <a href="https://scholar.google.com/AmitDawadi">https://scholar.google.com/AmitDawadi</a><br>
-            <em>Last update: June 22, 2025</em>
+            <em>Last update: July 7, 2025</em>
         </p>
         <hr class="blue-hr">
 
