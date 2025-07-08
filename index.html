@@ -8,16 +8,16 @@
  <meta name="author" content="Amit Dawadi" />
  <meta name="robots" content="index, follow" />
  <link rel="canonical" href="https://amitdawadi.com/" />
- <title>Physics Hunter — Amit Dawadi</title>
+ <title>PhD Candidate – Complex Matter & Nonlinear Physics</title>
 
  <meta property="og:type" content="website" />
  <meta property="og:url" content="https://amitdawadi.com/" />
- <meta property="og:title" content="Physics Hunter — Amit Dawadi" />
+ <meta property="og:title" content="PhD Candidate – Complex Matter & Nonlinear Physics" />
  <meta property="og:description" content="Soft matter physicist." />
  <meta property="og:image" content="https://amitdawadi.com/CV/profile.jfif" />
 
  <meta name="twitter:card" content="summary_large_image" />
- <meta name="twitter:title" content="Physics Hunter — Amit Dawadi" />
+ <meta name="twitter:title" content="PhD Candidate – Complex Matter & Nonlinear Physics" />
  <meta name="twitter:description" content="Physics PhD candidate exploring soft matter, mechanics, and nonlinear dynamics." />
  <meta name="twitter:image" content="https://amitdawadi.com/profile.jpg" />
 
@@ -42,34 +42,30 @@
  <style>
    body {
      font-family: Arial, sans-serif;
-     max-width: 1200px; /* Adjusted for better PC compatibility */
+     max-width: 1200px; /* Applied remembered setting for better PC compatibility */
      margin: 40px auto;
      padding: 0 20px;
      background: #fafafa;
      color: #222;
    }
    header {
-     text-align: center;
-     margin-bottom: 40px;
-     background-image: url('2023_physics_lab_folding_paper_jul25-11-4.jpg'); /* Background image from your previous code */
-     background-size: cover; /* Cover the entire header area */
-     background-position: center; /* Center the image */
-     color: white; /* Adjust text color for better visibility */
-     padding: 90px 20px; /* Add padding to make the header visible */
-     border-radius: 10px; /* Optional: Add rounded corners */
+    text-align: center;
+    margin-bottom: 40px;
+    background-image: url('../Research/1732648516824.jpg'); /* Background image from your previous code */
+    background-size: cover; /* Cover the entire header area */
+    background-position: center; /* Center the image */
+    color: white; /* Adjust text color for better visibility */
+    padding: 90px 20px; /* Add padding to make the header visible */
+    border-radius: 10px; /* Optional: Add rounded corners */
    }
    header h1 {
      font-weight: 700;
      font-size: 2.8rem;
      margin: 0;
    }
-   header p {
-     font-size: 1.3rem;
-     margin-top: 5px;
-   }
    nav {
      text-align: center;
-     /* margin-bottom: 30px;*/
+     /* margin-bottom: 30px; -- This will now be handled by the div wrapping the nav */
    }
    nav a {
      margin: 0 15px;
@@ -91,45 +87,177 @@
      font-weight: bold;
      color: #c40000;
    }
-   .section-box {
-     /* This max-width will now be effective only if it's smaller than the body's max-width,
-        or if the body's max-width is removed. Currently, it's wider than the body's max-width,
-        so the body's max-width will take precedence for the overall page width. */
-     max-width: 1700px;
+   .cv-container {
+     max-width: 1000px;
      margin: auto;
      padding: 20px;
      border: 2px solid #007BFF;
      border-radius: 10px;
-     background-color: #f9f9f9;
-     color: #000;
+     background-color: #fff;
    }
-   .blue-box {
+   .cv-container hr {
+     border: none;
+     border-top: 2px solid #007BFF;
+     margin: 20px 0;
+   }
+   .cv-container h2 {
+     color: #007BFF;
+   }
+   .cv-container ul {
+     padding-left: 20px;
+   }
+   .button-links {
+     display: flex;
+     justify-content: center;
+     gap: 20px;
+     margin-bottom: 30px;
+   }
+   .button-links a {
+     display: inline-block;
+     padding: 10px 20px;
+     background-color: #007BFF;
+     color: white;
+     text-decoration: none;
+     border-radius: 5px;
+     font-weight: bold;
+   }
+   .button-links a:hover {
+     background-color: #0056b3;
+   }
+   .button-and-image-container {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 15px;
+     margin-bottom: 30px;
+   }
+   .passport-image {
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     object-fit: cover;
+     border: 2px solid #007BFF;
+   }
+   .inner-cv-content-box {
+     max-width: 850px;
+     margin: auto;
+     padding: 20px;
      border: 2px solid #007BFF;
      border-radius: 10px;
-     background-color: #f0f8ff;
-     padding: 20px;
-     color: #000;
+     background-color: #fff;
+     box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
    }
-   .flex-row {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 20px;
-     justify-content: center;
+   .blue-hr {
+     border: none;
+     border-top: 2px solid blue;
+     width: 100%;
    }
-   .flex-col {
-     flex: 1 1 45%;
+   .contact-info-text {
+     text-align: center;
+     font-size: 20px;
+   }
+   .text-center {
      text-align: center;
    }
-   .media {
-     width: 100%;
-     height: auto;
+
+   /* --- Styles for Contact Page --- */
+   .contact-container {
+     max-width: 850px; /* Consistent with other content boxes */
+     margin: 40px auto;
+     padding: 20px;
+     border: 2px solid #007BFF;
      border-radius: 10px;
+     background-color: #fff;
+     box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+   }
+
+   .contact-section h3 {
+     color: #007BFF;
+     text-align: center;
+     margin-bottom: 25px;
+     font-size: 1.8rem;
+   }
+
+   .contact-columns {
+     display: flex;
+     flex-wrap: wrap; /* Allows columns to stack on smaller screens */
+     gap: 30px; /* Space between columns */
+     justify-content: center; /* Centers content when wrapped */
+   }
+
+   .contact-columns > div {
+     flex: 1; /* Allows columns to grow and shrink */
+     min-width: 300px; /* Minimum width before wrapping */
+     padding: 10px;
+   }
+
+   .contact-columns iframe {
+       border-radius: 8px; /* Slightly rounded corners for the form */
+       box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for the form */
+   }
+
+   .contact-columns p {
+     margin-bottom: 10px; /* Spacing for paragraphs */
+     line-height: 1.5;
+   }
+
+   .contact-columns strong {
+     display: block; /* Makes bold labels stack above content */
+     margin-bottom: 5px;
+     color: #333;
+   }
+
+   .social-links {
+     list-style: none; /* Remove default bullet points */
+     padding: 0;
+     display: flex; /* Make social links horizontal */
+     flex-wrap: wrap;
+     gap: 10px; /* Space between social buttons */
+     justify-content: center; /* Center social links */
+     margin-top: 20px;
+   }
+
+   .social-links li {
+     margin: 0;
+   }
+
+   .social-links a {
+     display: inline-block;
+     padding: 8px 15px;
+     background-color: #007acc; /* Button background */
+     color: white;
+     text-decoration: none;
+     border-radius: 5px;
+     font-weight: bold;
+     transition: background-color 0.3s ease; /* Smooth hover effect */
+   }
+
+   .social-links a:hover {
+     background-color: #0056b3;
+     text-decoration: none;
+   }
+
+   /* Responsive adjustments */
+   @media (max-width: 768px) {
+     .contact-columns {
+       flex-direction: column; /* Stack columns vertically on smaller screens */
+       align-items: center; /* Center stacked columns */
+     }
+     .contact-columns > div {
+       min-width: unset; /* Remove min-width when stacking */
+       width: 100%; /* Take full width */
+       max-width: 450px; /* Limit width for readability on very wide mobile screens */
+     }
+     .social-links {
+       justify-content: center; /* Keep social links centered */
+     }
    }
  </style>
 </head>
 <body>
- <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; border: 2px solid #28a745;">
-   <nav>
+ <!-- <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; max-width: 1000px; margin: 0 auto 20px auto; border: 2px solid #28a745; -->
+   <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; border: 2px solid #28a745;">
+    <nav>
      <a href="https://amitdawadi.github.io/adphys.github.io/" class="highlight-tab"><strong>Home</strong></a>
      <a href="https://amitdawadi.github.io/adphys.github.io/Research/">Research</a>
      <a href="https://amitdawadi.github.io/adphys.github.io/Publications/">Publications</a>
