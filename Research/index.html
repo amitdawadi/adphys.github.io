@@ -156,8 +156,12 @@
   </div>
 
   <footer>
-    &copy; 2025 Amit Dawadi
-    <p>Email: ADawadi@clarku.edu</p>
+    <p>&copy; 2025 Amit Dawadi</p>
+    <p>Email: <script>
+  const user = 'adawadi';
+  const domain = 'clarku.edu';
+  document.write('<a href="mailto:' + user + '@' + domain + '">' + user + '@' + domain + '</a>');
+</script> </p> 
   </footer>
 </body>
 </html>
