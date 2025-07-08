@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Amit Dawadi is a physics PhD candidate at Clark University. His work focuses on soft matter, mechanics, and experimental physics including crumpling, filament twisting, and granular materials." />
-  <meta name="keywords" content="Amit Dawadi, physics, soft matter, soft matter physics, computational physics, nonlinear dynamics, non-linear physics, granular physics, crumpling, twisted filaments, elastic materials, soft materials, metastability, self propulsion, self-organization, packing, architecture, metamaterials, Clark University, PhD, experimental physics" />
+  <meta name="keywords" content="Amit Dawadi, physics, soft matter, soft matter physics, computational physics, nonlinear dynamics, non-linear physics, granular physics, crumpling, filament twisting, elastic materials, soft materials, metastability, self propulsion, self-organization, packing, architecture, metamaterials, Clark University, PhD, experimental physics" />
   <meta name="author" content="Amit Dawadi" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://amitdawadi.com/" />
@@ -157,15 +157,23 @@
     }
     .image-row {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap; /* Prevent wrapping to next line */
       justify-content: center; /* Center images horizontally */
       gap: 15px; /* Space between images */
       margin-bottom: 20px; /* Space below image row */
+      overflow-x: auto; /* Allow horizontal scrolling if images overflow */
+      padding-bottom: 10px; /* Add some padding for scrollbar */
+      scroll-behavior: smooth; /* Smooth scrolling for overflow */
     }
     .image-row > div {
-      flex: 1 1 auto; /* Allow images to grow and shrink */
-      min-width: 250px; /* Minimum width before wrapping to next line */
-      max-width: calc(33.333% - 10px); /* Max 3 images per row */
+      flex: 0 0 auto; /* Do not grow, do not shrink, base on content width */
+      width: 250px; /* Set a fixed width for each image container */
+      /* You can adjust this width as needed. If you want them to be responsive AND on one line,
+         you'll need to use percentages that sum up to 100% or more, allowing overflow. */
+      /* For 4 images: width: calc(25% - 11.25px); // (100% - 3*15px_gap)/4 */
+      /* For more flexible "one row if possible": */
+      min-width: 200px; /* A minimum size before they get too small */
+      max-width: 300px; /* A maximum size if there's lots of space */
       box-sizing: border-box;
       text-align: center;
     }
@@ -257,9 +265,15 @@
       .event-box h3 {
         font-size: 1.6rem;
       }
+      .image-row {
+        flex-wrap: wrap; /* Allow wrapping on smaller screens to prevent tiny images */
+        justify-content: center;
+        overflow-x: hidden; /* Hide horizontal scrollbar if wrapping occurs */
+      }
       .image-row > div {
-        min-width: 100%; /* Stack images vertically on smaller screens */
-        max-width: 400px; /* Limit width of stacked images */
+        flex: 1 1 auto; /* Allow images to grow/shrink based on available space */
+        min-width: 150px; /* Set a more flexible min-width for small screens */
+        max-width: calc(50% - 10px); /* Allow up to 2 columns on tablets */
       }
       .image-row > div img {
         height: auto; /* Allow height to adjust */
@@ -322,6 +336,9 @@
       }
       .event-box h3 {
         font-size: 1.4rem;
+      }
+      .image-row > div {
+        max-width: 100%; /* Stack images vertically on very small screens */
       }
       .caption {
         font-size: 0.9em;
