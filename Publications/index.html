@@ -134,20 +134,32 @@
 
     /* Styles for publications list */
     .content-section ol {
-      list-style-type: decimal;
-      padding-left: 25px; /* Adjust padding for ordered list */
+      list-style: none; /* Remove default bullet points for custom layout */
+      padding-left: 0;
     }
     .content-section li {
-      margin-bottom: 25px; /* Space between list items */
+      margin-bottom: 30px; /* More space between list items for clarity */
       line-height: 1.6; /* Improve readability */
       display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start; /* Align image with the top of text */
-      gap: 15px; /* Space between text and image */
+      flex-wrap: wrap; /* Allow wrapping */
+      align-items: center; /* Vertically align items in the middle */
+      gap: 20px; /* Space between text and image */
+      background-color: #fff; /* White background for each list item */
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow for each item */
+    }
+    .content-section li:last-child {
+        margin-bottom: 0; /* No margin after the last item */
+    }
+    .content-section li .publication-text {
+        flex: 1; /* Allow text to take up remaining space */
+        min-width: 250px; /* Minimum width before wrapping */
     }
     .content-section li strong {
       display: block; /* Make link title on its own line */
       margin-bottom: 5px;
+      font-size: 1.1em; /* Slightly larger for title */
     }
     .content-section li a {
       color: #007acc;
@@ -158,10 +170,27 @@
     }
     .content-section li .publication-image {
       max-width: 150px; /* Set a max-width for publication images */
+      width: 100%; /* Ensure it's responsive */
       height: auto;
       border-radius: 8px;
       flex-shrink: 0; /* Prevent image from shrinking too much */
+      order: 1; /* Default order, image after text */
     }
+    /* For conference entries which don't have images */
+    .content-section .conference-item {
+        margin-bottom: 15px; /* Less space for simple list items */
+        line-height: 1.5;
+        background-color: transparent; /* No background for these items */
+        box-shadow: none; /* No shadow for these items */
+        padding: 0;
+        display: block; /* Revert to block for simpler list */
+        list-style: decimal; /* Re-enable numbers for conferences */
+        margin-left: 20px; /* Indent for numbers */
+    }
+    .content-section .conference-item a {
+        font-weight: bold; /* Make link bold */
+    }
+
 
     /* Image grid within projects section */
     .image-grid {
@@ -250,10 +279,21 @@
         align-items: center; /* Center stacked content */
         text-align: center; /* Center text as well */
         gap: 10px;
+        padding: 10px; /* Reduce padding for smaller screens */
       }
       .content-section li .publication-image {
         max-width: 100%; /* Make images take full width when stacked */
-        width: 200px; /* Or a fixed width if preferred for uniformity */
+        width: 180px; /* Or a fixed width if preferred for uniformity */
+        order: -1; /* Image appears above text when stacked */
+      }
+      .content-section li .publication-text {
+          min-width: unset; /* Remove min-width on small screens */
+          width: 100%; /* Take full width */
+      }
+      .content-section .conference-item {
+          margin-left: 0; /* Remove indent when stacked */
+          padding-left: 0;
+          text-align: left; /* Keep conference text left-aligned */
       }
       .image-grid-item {
         flex: 1 1 100%; /* Stack project grid items on smaller screens */
@@ -326,39 +366,45 @@
     <h2 class="text-center">Publications</h2>
     <ol>
       <li>
-        <strong>
-          <a href="https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.6.043206" target="_blank">
-            Memory in cyclically crumpled sheets
-          </a>
-        </strong> —
-        <em><a href="https://scholar.google.com/citations?user=h17lAacAAAAJ" target="_blank">Amit Dawadi</a></em> and
-        <em><a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ" target="_blank">Arshad Kudrolli</a></em>. Phys. Rev. Research 6, no. 4 (Nov 2024): 043206.
+        <div class="publication-text">
+          <strong>
+            <a href="https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.6.043206" target="_blank">
+              Memory in cyclically crumpled sheets
+            </a>
+          </strong> —
+          <em><a href="https://scholar.google.com/citations?user=h17lAacAAAAJ" target="_blank">Amit Dawadi</a></em> and
+          <em><a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ" target="_blank">Arshad Kudrolli</a></em>. Phys. Rev. Research 6, no. 4 (Nov 2024): 043206.
+        </div>
         <img src="1732648516824.jpg" alt="Crumpled sheet" class="publication-image">
       </li>
 
       <li>
-        <strong>
-          <a href="https://doi.org/10.1103/d782-cbmc" target="_blank">
-            Bundling architecture in elastic filaments with applied twist
-          </a>
-        </strong> —
-        <em><a href="https://scholar.google.com/citations?user=h17lAacAAAAJ" target="_blank">Amit Dawadi</a></em>,
-        <em><a href="https://scholar.google.com/citations?user=B7l4G-cAAAAJ" target="_blank">Animesh Biswas</a></em>,
-        <em><a href="https://scholar.google.com/citations?user=Qa-FiI4AAAAJ" target="_blank">Julien Chopin</a></em>, and
-        <em><a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ" target="_blank">Arshad Kudrolli</a></em>. Phys. Rev. E — Accepted June 18, 2025.
+        <div class="publication-text">
+          <strong>
+            <a href="https://doi.org/10.1103/d782-cbmc" target="_blank">
+              Bundling architecture in elastic filaments with applied twist
+            </a>
+          </strong> —
+          <em><a href="https://scholar.google.com/citations?user=h17lAacAAAAJ" target="_blank">Amit Dawadi</a></em>,
+          <em><a href="https://scholar.google.com/citations?user=B7l4G-cAAAAJ" target="_blank">Animesh Biswas</a></em>,
+          <em><a href="https://scholar.google.com/citations?user=Qa-FiI4AAAAJ" target="_blank">Julien Chopin</a></em>, and
+          <em><a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ" target="_blank">Arshad Kudrolli</a></em>. Phys. Rev. E — Accepted June 18, 2025.
+        </div>
         <img src="1742217311915-1.jpg" alt="Twisted filaments" class="publication-image">
       </li>
 
       <li>
-        <strong>
-          <a href="https://arxiv.org/abs/2412.16010" target="_blank">
-            Self-Propulsion of floating ice blocks caused by melting in water
-          </a>
-        </strong> —
-        <em><a href="https://scholar.google.com/citations?user=uAIZEqgAAAAJ" target="_blank">Michael Berhanu</a></em>,
-        <em><a href="https://scholar.google.com/citations?user=h17lAacAAAAJ" target="_blank">Amit Dawadi</a></em>,
-        <em><a href="https://scholar.google.com/citations?user=mr_cS_8AAAAJ" target="_blank">Martin Chaigne</a></em>, Jérôme Jovet, and
-        <em><a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ" target="_blank">Arshad Kudrolli</a></em>. Preprint: arXiv:2412.16010
+        <div class="publication-text">
+          <strong>
+            <a href="https://arxiv.org/abs/2412.16010" target="_blank">
+              Self-Propulsion of floating ice blocks caused by melting in water
+            </a>
+          </strong> —
+          <em><a href="https://scholar.google.com/citations?user=uAIZEqgAAAAJ" target="_blank">Michael Berhanu</a></em>,
+          <em><a href="https://scholar.google.com/citations?user=h17lAacAAAAJ" target="_blank">Amit Dawadi</a></em>,
+          <em><a href="https://scholar.google.com/citations?user=mr_cS_8AAAAJ" target="_blank">Martin Chaigne</a></em>, Jérôme Jovet, and
+          <em><a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ" target="_blank">Arshad Kudrolli</a></em>. Preprint: arXiv:2412.16010
+        </div>
         <img src="picture3.jpg" alt="Self-propulsion of ice" class="publication-image">
       </li>
     </ol>
@@ -388,35 +434,35 @@
   <div class="content-section">
     <h2 class="text-center">Conferences and Presentations</h2>
     <ol>
-      <li>
+      <li class="conference-item">
         <a href="https://gibbs.ccny.cuny.edu/NEGW/viewabstract.php?id=536" target="_blank">
           Architected granular materials for impact mitigation
         </a>, <em>A. Dawadi and A. Kudrolli</em>, 21<sup>st</sup> Northeastern Granular Materials Workshop, Yale University, 2025
       </li>
-      <li>
+      <li class="conference-item">
         <a href="https://complexfluids.org/necf/index.php" target="_blank">
           Self-propulsion of floating ice blocks in saline water
         </a>, <em>A. Dawadi and A. Kudrolli</em>, 103<sup>rd</sup> New England Complex Fluids Workshop, UMass Amherst, 2025
       </li>
-      <li>
+      <li class="conference-item">
         <a href="https://summit.aps.org/events/MAR-B64/11" target="_blank">
           Bundle architecture of twisted elastic filaments with migration
         </a>, <em>A. Dawadi, A. Biswas, J. Chopin, and A. Kudrolli</em>, APS March Meeting, 2025
       </li>
-      <li>
+      <li class="conference-item">
         Self-Propulsion of floating ice blocks in water, <em>A. Dawadi and A. Kudrolli</em>, 101<sup>st</sup> New England Complex Fluids Workshop, Harvard, 2024
       </li>
-      <li>
+      <li class="conference-item">
         <a href="https://meetings.aps.org/Meeting/MAR24/Session/W35.3" target="_blank">
           Folding pathways to crumpling a sheet with cyclic wringing
         </a>, <em>A. Dawadi and A. Kudrolli</em>, APS March Meeting, 2024
       </li>
-      <li>
+      <li class="conference-item">
         <a href="https://meetings.aps.org/Meeting/MAR24/Session/S34.5" target="_blank">
           Twisted structure of multifilament bundles and sheets
         </a>, <em>A. Biswas, A. Dawadi, and A. Kudrolli</em>, APS March Meeting, 2024
       </li>
-      <li>
+      <li class="conference-item">
         <a href="http://nonlineaire.univ-lille1.fr/SNL/media/2024/resumes/mberhanu/Berhanu_Michael_RNL2024.pdf" target="_blank">
           Self-propulsion of floating ice blocks by melting
         </a>, <em>M. Chaigne, J. Jovet, M. Berhanu, A. Dawadi, and A. Kudrolli</em>, Rencontre du Non-Linéaire, 2024
