@@ -58,7 +58,7 @@
      padding: 90px 20px; /* Add padding to make the header visible */
      border-radius: 10px; /* Optional: Add rounded corners */
    }
-   header h1 {
+    header h1 {
      font-weight: 700;
      font-size: 2.8rem;
      margin: 0;
@@ -156,14 +156,14 @@
      text-align: center;
      font-size: 20px;
    }
-   .text-center { /* Corrected class name */
+   .text-center {
      text-align: center;
    }
 
-   /* --- New/Updated Styles for Publications/Projects/Conferences Page --- */
-   .content-section {
+   /* --- Styles for Contact Page --- */
+   .contact-container {
      max-width: 850px; /* Consistent with other content boxes */
-     margin: 40px auto; /* Adds space above and below sections */
+     margin: 40px auto;
      padding: 20px;
      border: 2px solid #007BFF;
      border-radius: 10px;
@@ -171,84 +171,92 @@
      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
    }
 
-   .content-section h2, .content-section h3 {
+   .contact-section h3 {
      color: #007BFF;
-     text-align: center; /* Ensures headings are centered */
+     text-align: center;
      margin-bottom: 25px;
      font-size: 1.8rem;
    }
 
-   .content-section ol {
-     padding-left: 25px; /* Indent for ordered list */
-   }
-
-   .content-section li {
-     margin-bottom: 25px; /* Space between list items (publications/presentations) */
-     line-height: 1.6;
-   }
-
-   /* Publication Image Styling */
-   .publication-image {
-       display: block; /* Makes image take its own line */
-       width: 150px; /* Smaller, fixed width for thumbnail effect */
-       height: auto;
-       margin: 15px auto 0 auto; /* Center the image below the text, add top margin */
-       border-radius: 5px; /* Slightly rounded corners */
-       box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
-       max-width: 90%; /* Ensure it doesn't overflow on small screens */
-   }
-
-   /* Project Image Grid Styling */
-   .image-grid {
+   .contact-columns {
      display: flex;
-     flex-wrap: wrap; /* Allow items to wrap */
-     justify-content: center; /* Center items in the grid */
-     gap: 30px; /* Space between grid items */
-     margin-top: 25px;
+     flex-wrap: wrap; /* Allows columns to stack on smaller screens */
+     gap: 30px; /* Space between columns */
+     justify-content: center; /* Centers content when wrapped */
    }
 
-   .image-grid-item {
-     text-align: center;
-     flex: 1; /* Allow items to grow/shrink */
-     min-width: 250px; /* Minimum width before wrapping */
-     max-width: 350px; /* Max width for images and captions */
+   .contact-columns > div {
+     flex: 1; /* Allows columns to grow and shrink */
+     min-width: 300px; /* Minimum width before wrapping */
      padding: 10px;
-     border: 1px solid #eee; /* Light border for grid items */
-     border-radius: 8px;
-     background-color: #fcfcfc;
-     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
    }
 
-   .image-grid-item img {
-     width: 100%; /* Image fills its container */
-     height: auto;
-     border-radius: 5px;
-     margin-bottom: 10px;
+   .contact-columns iframe {
+       border-radius: 8px; /* Slightly rounded corners for the form */
+       box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for the form */
    }
 
-   .image-grid-item p {
-     font-weight: bold;
-     color: #444;
+   .contact-columns p {
+     margin-bottom: 10px; /* Spacing for paragraphs */
+     line-height: 1.5;
+   }
+
+   .contact-columns strong {
+     display: block; /* Makes bold labels stack above content */
+     margin-bottom: 5px;
+     color: #333;
+   }
+
+   .social-links {
+     list-style: none; /* Remove default bullet points */
+     padding: 0;
+     display: flex; /* Make social links horizontal */
+     flex-wrap: wrap;
+     gap: 10px; /* Space between social buttons */
+     justify-content: center; /* Center social links */
+     margin-top: 20px;
+   }
+
+   .social-links li {
      margin: 0;
    }
 
-   /* Responsive adjustments for image grid */
+   .social-links a {
+     display: inline-block;
+     padding: 8px 15px;
+     background-color: #007acc; /* Button background */
+     color: white;
+     text-decoration: none;
+     border-radius: 5px;
+     font-weight: bold;
+     transition: background-color 0.3s ease; /* Smooth hover effect */
+   }
+
+   .social-links a:hover {
+     background-color: #0056b3;
+     text-decoration: none;
+   }
+
+   /* Responsive adjustments */
    @media (max-width: 768px) {
-     .image-grid-item {
-       flex-basis: 45%; /* Two items per row on medium screens */
+     .contact-columns {
+       flex-direction: column; /* Stack columns vertically on smaller screens */
+       align-items: center; /* Center stacked columns */
+     }
+     .contact-columns > div {
+       min-width: unset; /* Remove min-width when stacking */
+       width: 100%; /* Take full width */
+       max-width: 450px; /* Limit width for readability on very wide mobile screens */
+     }
+     .social-links {
+       justify-content: center; /* Keep social links centered */
      }
    }
-
-   @media (max-width: 480px) {
-     .image-grid-item {
-       flex-basis: 90%; /* One item per row on small screens */
-     }
-   }
-
  </style>
 </head>
 <body>
-  <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; max-width: 1000px; margin: 0 auto 20px auto; border: 2px solid #28a745;">
+ <!-- <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; max-width: 1000px; margin: 0 auto 20px auto; border: 2px solid #28a745; -->
+   <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; border: 2px solid #28a745;">
    <nav>
      <a href="https://amitdawadi.github.io/adphys.github.io/">Home</a>
      <a href="https://amitdawadi.github.io/adphys.github.io/Research/">Research</a>
