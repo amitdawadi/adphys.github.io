@@ -63,10 +63,6 @@
      font-size: 2.8rem;
      margin: 0;
    }
-   header p {
-     font-size: 1.3rem;
-     margin-top: 5px;
-   }
    nav {
      text-align: center;
      /* margin-bottom: 30px; -- This will now be handled by the div wrapping the nav */
@@ -160,14 +156,14 @@
      text-align: center;
      font-size: 20px;
    }
-   .text-center { /* Corrected class name */
+   .text-center {
      text-align: center;
    }
 
-   /* --- New/Updated Styles for Research Page --- */
-   .content-section {
+   /* --- Styles for Contact Page --- */
+   .contact-container {
      max-width: 850px; /* Consistent with other content boxes */
-     margin: 40px auto; /* Adds space above and below sections */
+     margin: 40px auto;
      padding: 20px;
      border: 2px solid #007BFF;
      border-radius: 10px;
@@ -175,88 +171,92 @@
      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
    }
 
-   .content-section h3 {
+   .contact-section h3 {
      color: #007BFF;
-     text-align: center; /* Ensures headings are centered */
-     margin-bottom: 25px;
-     font-size: 1.6rem; /* Slightly smaller than h2, but still prominent */
-   }
-
-   .content-section p {
-     margin-bottom: 1em; /* Standard spacing for paragraphs */
-     line-height: 1.6;
-   }
-
-   /* Styles for main research images */
-   .img-center {
-       display: block; /* Makes image take its own line */
-       margin: 25px auto; /* Center the image with good spacing */
-       max-width: 90%; /* Ensure it's responsive and doesn't overflow */
-       height: auto;
-       border-radius: 8px; /* Slightly rounded corners */
-       box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* More prominent shadow for main images */
-   }
-
-   .image-caption {
-       text-align: center;
-       font-size: 0.9em;
-       color: #555;
-       margin-top: -15px; /* Pull caption closer to image */
-       margin-bottom: 30px; /* Space after caption */
-   }
-
-   /* Image Grid Styling (for Figure 2, 3, 4) */
-   .image-grid {
-     display: flex;
-     flex-wrap: wrap; /* Allow items to wrap to next line */
-     justify-content: center; /* Center items in the grid */
-     gap: 20px; /* Space between grid items */
-     margin-top: 25px;
-     margin-bottom: 30px;
-   }
-
-   .image-grid-item {
      text-align: center;
-     flex: 1; /* Allows items to grow and shrink */
-     min-width: 250px; /* Minimum width before wrapping */
-     max-width: 30%; /* Max width for three columns, adjust as needed */
-     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+     margin-bottom: 25px;
+     font-size: 1.8rem;
+   }
+
+   .contact-columns {
+     display: flex;
+     flex-wrap: wrap; /* Allows columns to stack on smaller screens */
+     gap: 30px; /* Space between columns */
+     justify-content: center; /* Centers content when wrapped */
+   }
+
+   .contact-columns > div {
+     flex: 1; /* Allows columns to grow and shrink */
+     min-width: 300px; /* Minimum width before wrapping */
      padding: 10px;
-     border: 1px solid #eee; /* Light border for grid items */
-     border-radius: 8px;
-     background-color: #fcfcfc;
-     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
    }
 
-   .image-grid-item img {
-     width: 100%; /* Image fills its container */
-     height: auto;
-     border-radius: 5px;
-     margin-bottom: 10px;
+   .contact-columns iframe {
+       border-radius: 8px; /* Slightly rounded corners for the form */
+       box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for the form */
    }
 
-   .image-grid-item p {
-     font-weight: bold;
-     color: #444;
+   .contact-columns p {
+     margin-bottom: 10px; /* Spacing for paragraphs */
+     line-height: 1.5;
+   }
+
+   .contact-columns strong {
+     display: block; /* Makes bold labels stack above content */
+     margin-bottom: 5px;
+     color: #333;
+   }
+
+   .social-links {
+     list-style: none; /* Remove default bullet points */
+     padding: 0;
+     display: flex; /* Make social links horizontal */
+     flex-wrap: wrap;
+     gap: 10px; /* Space between social buttons */
+     justify-content: center; /* Center social links */
+     margin-top: 20px;
+   }
+
+   .social-links li {
      margin: 0;
    }
 
-   /* Responsive adjustments for image grid */
-   @media (max-width: 900px) { /* Adjust breakpoint for two columns */
-     .image-grid-item {
-       max-width: 45%; /* Two items per row on medium screens */
-     }
+   .social-links a {
+     display: inline-block;
+     padding: 8px 15px;
+     background-color: #007acc; /* Button background */
+     color: white;
+     text-decoration: none;
+     border-radius: 5px;
+     font-weight: bold;
+     transition: background-color 0.3s ease; /* Smooth hover effect */
    }
 
-   @media (max-width: 600px) { /* Adjust breakpoint for one column */
-     .image-grid-item {
-       max-width: 90%; /* One item per row on small screens */
+   .social-links a:hover {
+     background-color: #0056b3;
+     text-decoration: none;
+   }
+
+   /* Responsive adjustments */
+   @media (max-width: 768px) {
+     .contact-columns {
+       flex-direction: column; /* Stack columns vertically on smaller screens */
+       align-items: center; /* Center stacked columns */
+     }
+     .contact-columns > div {
+       min-width: unset; /* Remove min-width when stacking */
+       width: 100%; /* Take full width */
+       max-width: 450px; /* Limit width for readability on very wide mobile screens */
+     }
+     .social-links {
+       justify-content: center; /* Keep social links centered */
      }
    }
  </style>
 </head>
 <body>
-   <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; max-width: 1000px; margin: 0 auto 20px auto; border: 2px solid #28a745;">
+ <!-- <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; max-width: 1000px; margin: 0 auto 20px auto; border: 2px solid #28a745; -->
+   <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; border: 2px solid #28a745;">
    <nav>
      <a href="https://amitdawadi.github.io/adphys.github.io/">Home</a>
      <a href="https://amitdawadi.github.io/adphys.github.io/Research/" class="highlight-tab">Research</a>
