@@ -7,9 +7,9 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 1000px;
+      max-width: 1000px; /* Max width for larger screens */
       margin: 40px auto;
-      padding: 0 20px;
+      padding: 0 20px; /* Padding for smaller screens */
       background: #fafafa;
       color: #222;
     }
@@ -25,13 +25,17 @@
     nav {
       text-align: center;
       margin-bottom: 30px;
+      display: flex; /* Use flexbox for navigation */
+      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+      justify-content: center; /* Center items horizontally */
+      gap: 10px; /* Space between nav items */
     }
     nav a {
-      margin: 0 15px;
       text-decoration: none;
       color: #007acc;
       font-weight: 600;
       font-size: 1.1rem;
+      padding: 5px 10px; /* Add padding for better touch targets */
     }
     nav a:hover {
       text-decoration: underline;
@@ -53,6 +57,8 @@
     .img-center {
       display: block;
       margin: 20px auto;
+      max-width: 100%; /* Ensure images don't overflow */
+      height: auto; /* Maintain aspect ratio */
     }
     .image-caption {
       text-align: center;
@@ -68,9 +74,79 @@
       margin-top: 20px;
     }
     .image-grid-item {
-      flex: 0 0 auto;
+      flex: 1 1 calc(50% - 20px); /* Adjust flex-basis for two columns with gap */
       text-align: center;
-      max-width: 45%;
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      max-width: 480px; /* Optional: prevent items from becoming too wide on large screens */
+    }
+    .image-grid-item img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* --- Responsive Styles --- */
+
+    /* General containers for responsiveness */
+    .content-wrapper {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-sizing: border-box; /* Include padding in width */
+    }
+
+    .nav-container {
+      background-color: #d4edda;
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px solid #28a745;
+      margin-bottom: 20px; /* Add some space below the nav */
+    }
+
+    .main-content-container {
+      border: 2px solid #007BFF;
+      background-color: #f9f9f9;
+      color: #000;
+    }
+
+    /* Media queries for smaller screens */
+    @media (max-width: 768px) {
+      body {
+        margin: 20px auto; /* Reduce margin on smaller screens */
+        padding: 0 15px;
+      }
+      header h1 {
+        font-size: 2.2rem; /* Adjust heading size */
+      }
+      nav a {
+        font-size: 1rem; /* Adjust nav link size */
+        margin: 5px 8px; /* Adjust spacing */
+      }
+      .image-grid-item {
+        flex: 1 1 100%; /* Make image grid items stack on small screens */
+        max-width: 100%; /* Ensure they take full width */
+      }
+    }
+
+    /* Media query for even smaller screens (e.g., mobile phones) */
+    @media (max-width: 480px) {
+      body {
+        padding: 0 10px;
+      }
+      header h1 {
+        font-size: 1.8rem;
+      }
+      nav {
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: center; /* Center them when stacked */
+      }
+      nav a {
+        margin: 5px 0; /* Adjust vertical spacing */
+        width: 100%; /* Make links take full width for easier tapping */
+      }
+      .content-wrapper {
+        padding: 15px; /* Reduce padding for content wrappers */
+      }
     }
   </style>
 </head>
@@ -80,22 +156,22 @@
     <p><em>Amit Dawadi — Early Career Physicist</em></p>
   </header>
 
-     <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; max-width: 1000px; margin: auto; border: 2px solid #28a745;">
-  <nav>
-    <a href="https://amitdawadi.github.io/adphys.github.io/">Home</a>
-<a href="https://amitdawadi.github.io/adphys.github.io/research.html" class="highlight-tab"><strong>Research</strong></a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/Publications.html">Publications</a> 
-    <a href="https://amitdawadi.github.io/adphys.github.io/Outreach.html">Outreach</a>
-   <a href="https://amitdawadi.github.io/adphys.github.io/CV.html">CV</a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/Contact.html" >Contact</a>
-  </nav>
-</div>
+  <div class="content-wrapper nav-container">
+    <nav>
+      <a href="https://amitdawadi.github.io/adphys.github.io/">Home</a>
+      <a href="https://amitdawadi.github.io/adphys.github.io/research.html" class="highlight-tab"><strong>Research</strong></a>
+      <a href="https://amitdawadi.github.io/adphys.github.io/Publications.html">Publications</a> 
+      <a href="https://amitdawadi.github.io/adphys.github.io/Outreach.html">Outreach</a>
+      <a href="https://amitdawadi.github.io/adphys.github.io/CV.html">CV</a>
+      <a href="https://amitdawadi.github.io/adphys.github.io/Contact.html" >Contact</a>
+    </nav>
+  </div>
 
-  <div style="max-width: 1000px; margin: auto; padding: 20px; border: 2px solid #007BFF; border-radius: 10px; background-color: #f9f9f9; color: #000">
+  <div class="content-wrapper main-content-container">
     <section>
       <h3 class="text-centre">My Current Research</h3>
       <p>
-       Currently, my primary research involves the conception, design, and experimental study of a new class of granular metamaterials, leveraging our lab's 3D-printing capabilities to engineer materials with superior impact mitigation and energy absorption properties. 
+        Currently, my primary research involves the conception, design, and experimental study of a new class of granular metamaterials, leveraging our lab's 3D-printing capabilities to engineer materials with superior impact mitigation and energy absorption properties. 
         Concurrently, my work also delves into understanding the intricate dynamics of active filaments embedded within granular beds.   </p>
       <p>Here are the major research projects I have worked on during my PhD:</p>
 
@@ -107,20 +183,20 @@
       <p>In this project, I study how thin flexible sheets respond when repeatedly twisted. We use Mylar sheets rolled into a cylinder that are clamped along opposite edges and apply controlled twisting cycles allowing 
         one end to translate freely along the frictionless linear guide. As the sheet is twisted and untwisted multiple times, it develops a complex network of ridges and valleys.</p>
       
-      <img src="picture2 (1).png" style="width: 90%; height: auto;" alt="Experimental setup for twisting" class="img-center" />
+      <img src="picture2 (1).png" alt="Experimental setup for twisting" class="img-center" />
       <div class="image-caption"><strong>Figure 1:</strong> Experimental setup for twisting (left) and custom-made laser profilometer (right)</div>
 
       <div class="image-grid">
         <div class="image-grid-item">
-          <img src="2023_physics_lab_folding_paper_jul25-11-4.jpg" style="width: 100%; height: auto;" alt="Twisting in progress" />
+          <img src="2023_physics_lab_folding_paper_jul25-11-4.jpg" alt="Twisting in progress" />
           <p><strong>Figure 2:</strong> Twisting under progress</p>
         </div>
         <div class="image-grid-item">
-          <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg" style="width: 100%; height: auto;" alt="After twist" />
+          <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg" alt="After twist" />
           <p><strong>Figure 3:</strong> After twist</p>
         </div>
         <div class="image-grid-item">
-          <img src="1732648516824.jpg" style="width: 100%; height: auto;" alt="3D Reconstruction" />
+          <img src="1732648516824.jpg" alt="3D Reconstruction" />
           <p><strong>Figure 4:</strong> 3D reconstruction of a crumpled sheet obtained using a custom-built laser profilometer</p>
         </div>
       </div>
@@ -141,7 +217,7 @@
         that balances stretching, bending, twisting, and contact energy. Our results provide new insights into the mechanics of natural and engineered fiber assemblies, 
         with implications for materials design, biology, and soft matter physics.</p>
 
-      <img src="1742217311915-1.jpg" style="width: 70%; height: auto;" alt="Filament Bundling" class="img-center" />
+      <img src="1742217311915-1.jpg" alt="Filament Bundling" class="img-center" />
       <div class="image-caption"><strong>Figure 5:</strong> Filament bundles undergo radial instability under axial twist</div>
 
       <h3>3. Self-Propulsion of Floating Ice Block on Water Surface</h3>
@@ -149,7 +225,7 @@
         Read the article in arXiv:
         <a href="https://arxiv.org/abs/2412.16010" target="_blank">Self-Propulsion of Floating Ice Blocks</a>
       </p>
-      <img src="picture3.jpg" alt="Self-propulsion of ice" style="width: 50%; height: auto;" class="img-center" />
+      <img src="picture3.jpg" alt="Self-propulsion of ice" class="img-center" />
       <div class="image-caption"><strong>Figure 6:</strong> Dyed wedge-shaped ice block placed on water — melt water flows along the longest inclined edge</div>
     </section>
   </div>
