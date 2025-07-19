@@ -1,6 +1,6 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Amit Dawadi is a physics PhD candidate at Clark University. His work focuses on soft matter, mechanics, and experimental physics including crumpling, filament twisting, and granular materials." />
@@ -195,19 +195,31 @@
     }
     .image-grid {
       display: flex;
-      flex-wrap: nowrap; /* Ensure images stay in a single row */
-      justify-content: space-between; /* Distribute space evenly */
-      gap: 10px; /* Adjust gap as needed */
+      flex-wrap: wrap; /* Allow wrapping for responsive behavior */
+      justify-content: center; /* Center items in the grid */
+      gap: 20px; /* Space between grid items */
       margin-top: 20px;
-      overflow-x: auto; /* Enable horizontal scrolling if needed */
     }
     .image-grid-item {
-      flex: 0 0 auto; /* Don't grow or shrink, take up only necessary width */
-      width: calc(33.333% - 10px); /* Adjust width based on the number of images and gap */
-      max-width: none; /* Override previous max-width */
+      flex: 1 1 calc(50% - 30px); /* For two columns on larger screens, considering gap */
+      max-width: calc(50% - 30px); /* Ensures two columns */
       text-align: center;
       box-sizing: border-box;
     }
+
+    /* Specific styles for the second image grid to ensure it always has two items per row */
+    /* You can give a specific class to the second grid if you want it to behave differently
+       than the first. For this example, I'll apply it to all .image-grid elements,
+       assuming you want this two-column layout for any .image-grid with 2 or more items
+       unless specified otherwise. If you want only the second grid to have two columns
+       and the first grid to keep its three columns, we'd need to add a unique class
+       to the second .image-grid div.
+    */
+    .image-grid.two-columns .image-grid-item {
+      flex: 1 1 calc(50% - 20px); /* For a two-column layout, accounting for gap */
+      max-width: calc(50% - 20px);
+    }
+
     .image-grid-item img {
       width: 100%;
       height: auto;
@@ -247,9 +259,10 @@
 
     /* General adjustments for smaller screens */
     @media (max-width: 1024px) { /* Adjust breakpoint for larger tablets/smaller desktops if needed */
-      .image-grid-item {
-        flex: 0 0 calc(50% - 10px); /* Two columns on medium screens */
-        width: calc(50% - 10px);
+      /* First image grid (3 items) will naturally break to 2 then 1 */
+      .image-grid:not(.two-columns) .image-grid-item {
+        flex: 1 1 calc(50% - 20px); /* Two columns on medium screens */
+        max-width: calc(50% - 20px);
       }
     }
 
@@ -307,12 +320,10 @@
         padding: 15px;
         margin: 20px auto;
       }
-      .image-grid {
-        overflow-x: auto; /* Keep horizontal scrolling */
-      }
+      /* Both image grids will default to a single column on small mobile screens */
       .image-grid-item {
-        flex: 0 0 calc(50% - 10px); /* Two columns on smaller screens */
-        width: calc(50% - 10px);
+        flex: 1 1 100%; /* Stack image grid items on smaller screens */
+        max-width: 100%;
       }
       /* Ensure other flex elements also stack if present on this page */
       .button-links, .button-and-image-container, .contact-columns {
@@ -356,17 +367,13 @@
         padding: 10px;
         margin: 15px auto;
       }
-      .image-grid-item {
-        flex: 0 0 calc(100% - 10px); /* Single column on very small screens */
-        width: calc(100% - 10px);
-      }
       .image-caption {
         font-size: 0.8em;
       }
     }
   </style>
- </head>
- <body>
+</head>
+<body>
   <nav class="navbar">
     <ul class="nav">
       <li class="dropdown">
@@ -438,8 +445,7 @@
         into ordered bundles under axial twisting and eventually become disordered. The filaments exhibit radial migration, resulting in an emergent internal structure
         that balances stretching, bending, twisting, and contact energy. Our results provide new insights into the mechanics of natural and engineered fiber assemblies,
         with implications for materials design, biology, and soft matter physics.</p>
-      <div class="image-grid">
-        <div class="image-grid-item">
+      <div class="image-grid two-columns"> <div class="image-grid-item">
           <img src="1742217311915-1.jpg" alt="Filament Bundling" />
           <p><strong>Figure 5:</strong>Filament bundles undergo radial instability under axial twist</p>
         </div>
@@ -467,5 +473,5 @@
       document.write('<a href="mailto:' + user + '@' + domain + '">' + user + '@' + domain + '</a>');
     </script> </p>
   </footer>
- </body>
- </html>
+</body>
+</html>
