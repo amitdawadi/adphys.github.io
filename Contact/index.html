@@ -88,30 +88,77 @@
     header a:hover {
         text-decoration: underline;
     }
-    /* The nav styling is now applied directly to the nav element itself */
-    nav {
-      display: flex; /* Use flexbox for navigation */
-      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-      justify-content: center; /* Center items horizontally */
-      gap: 10px; /* Space between nav items */
-      background-color: #d4edda;
+
+    /* Nav styles - similar to previous iteration */
+    .navbar {
+      text-align: center;
       padding: 15px;
       border-radius: 10px;
       border: 2px solid #28a745;
-      margin-bottom: 20px; /* Consistent margin below nav */
+      background-color: #d4edda;
+      margin-bottom: 20px;
     }
-    nav a {
-      margin: 0 5px; /* Adjust margin for nav items to prevent overcrowding on smaller screens */
+    .navbar .nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex; /* Display main nav items horizontally */
+      justify-content: center;
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    .navbar .nav li {
+      position: relative; /* Needed for dropdown positioning */
+      margin: 0 10px; /* Space between main nav items */
+    }
+    .navbar .nav li a {
       text-decoration: none;
       color: #007acc;
       font-weight: 600;
       font-size: 1.1rem;
-      padding: 5px 10px; /* Add padding for better touch targets */
+      padding: 5px 10px;
+      display: block; /* Make the whole area clickable */
       white-space: nowrap; /* Prevent nav items from breaking words */
     }
-    nav a:hover {
+    .navbar .nav li a:hover {
       text-decoration: underline;
     }
+    .navbar .nav .highlight-tab strong {
+      color: #c40000; /* Highlight color for "Home" */
+    }
+
+    /* Dropdown styles - similar to previous iteration */
+    .dropdown-content {
+      display: none; /* Hidden by default */
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 10; /* Ensure dropdown appears above other content */
+      border-radius: 5px;
+      left: 50%; /* Center dropdown relative to parent */
+      transform: translateX(-50%); /* Adjust for centering */
+      top: 100%; /* Position below the parent link */
+      padding: 5px 0;
+    }
+    .dropdown-content li {
+      margin: 0; /* Remove margin for dropdown list items */
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 8px 15px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      font-size: 1rem;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      text-decoration: none;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block; /* Show dropdown on hover */
+    }
+
     footer {
       text-align: center;
       margin-top: 60px;
@@ -233,11 +280,44 @@
       header h1 {
         font-size: 2.2rem;
       }
-      nav a {
-        font-size: 1rem;
-        margin: 5px 8px;
-        padding: 8px 12px;
+      /* Nav adjustments for smaller screens */
+      .navbar .nav {
+        flex-direction: column; /* Stack nav items vertically on smaller screens */
+        align-items: center; /* Center them when stacked */
       }
+      .navbar .nav li {
+        margin: 5px 0; /* Adjust vertical spacing */
+      }
+      .navbar .nav li a {
+        width: 100%; /* Make links take full width for easier tapping */
+        font-size: 0.95rem;
+        text-align: center;
+      }
+      .dropdown-content {
+        position: static; /* Stack dropdown content below parent on small screens */
+        display: block; /* Always show dropdown content on small screens if parent is clicked/focused */
+        width: 100%;
+        box-shadow: none;
+        transform: translateX(0); /* Remove centering transform */
+        background-color: transparent; /* Transparent background for stacked items */
+        padding: 0;
+        border-top: 1px solid rgba(0,0,0,0.1); /* Separator */
+      }
+      .dropdown-content a {
+        padding: 5px 20px; /* Adjust padding for sub-items */
+        font-size: 0.9rem;
+        color: #007acc; /* Keep link color */
+        background-color: #e6f2ff; /* Light background for dropdown items */
+        border-radius: 0; /* No border-radius for stacked items */
+      }
+      .dropdown:hover .dropdown-content {
+        display: block; /* Keep dropdown content visible on hover for desktop, but not needed for mobile */
+      }
+      /* Ensure dropdown items are always shown on mobile for simplicity */
+      .dropdown-content {
+        display: block; /* Always show dropdown items on small screens */
+      }
+
       .contact-container {
         padding: 15px;
         margin: 20px auto;
@@ -276,14 +356,10 @@
       header p {
         font-size: 0.9rem;
       }
-      nav {
-        flex-direction: column;
-        align-items: center;
+      .navbar {
         padding: 10px;
       }
-      nav a {
-        margin: 5px 0;
-        width: 100%;
+      .navbar .nav li a {
         font-size: 0.95rem;
       }
       .contact-container {
@@ -300,15 +376,21 @@
   </style>
 </head>
 <body>
-  <nav>
-    <a href="https://amitdawadi.github.io/adphys.github.io/">Home</a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/Research/">Research</a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/Publications/">Publications</a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/Outreach/">Outreach</a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/CV/">CV</a>
-    <a href="https://amitdawadi.github.io/adphys.github.io/Contact/" class="highlight-tab"><strong>Contact</strong></a>
-  </nav>
-
+  <nav class="navbar">
+  <ul class="nav">
+    <li class="dropdown">
+      <a href="https://amitdawadi.github.io/adphys.github.io/" class="highlight-tab"><strong>Home</strong></a>
+      <ul class="dropdown-content">
+        <li> <a href="https://amitdawadi.github.io/adphys.github.io/" >About Me</a></li>
+        <li> <a href="https://amitdawadi.github.io/adphys.github.io/CV/">CV</a></li>
+        <li><a href="https://amitdawadi.github.io/adphys.github.io/Contact/"><strong>Contact</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="https://amitdawadi.github.io/adphys.github.io/Research/">Research</a></li>
+    <li><a href="https://amitdawadi.github.io/adphys.github.io/Publications/">Publications</a></li>
+    <li><a href="https://amitdawadi.github.io/adphys.github.io/Outreach/">Outreach</a></li>
+  </ul>
+</nav>
   <header>
     <h1>Amit Dawadi</h1>
     <p><em>PhD Candidate – Complex Matter & Nonlinear Physics</em></p>
