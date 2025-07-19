@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Amit Dawadi is a physics PhD candidate at Clark University. His work focuses on soft matter, mechanics, and experimental physics including crumpling, filament twisting, and granular materials." />
+  <meta name="keywords" content="Amit Dawadi, physics, soft matter, soft matter physics, computational physics, nonlinear dynamics, non-linear physics, granular physics, crumpling, twisted filaments, elastic materials, soft materials, metastability, self propulsion, self-organization, packing, architecture, metamaterials, Clark University, PhD, experimental physics" />
+  <meta name="author" content="Amit Dawadi" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://amitdawadi.com/" />
+  <title>PhD Candidate – Complex Matter & Nonlinear Physics</title>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://amitdawadi.com/" />
+  <meta property="og:title" content="PhD Candidate – Complex Matter & Nonlinear Physics" />
+  <meta property="og:description" content="Soft matter physicist." />
+  <meta property="og:image" content="https://amitdawadi.com/CV/profile.jfif" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PhD Candidate – Complex Matter & Nonlinear Physics" />
+  <meta name="twitter:description" content="Physics PhD candidate exploring soft matter, mechanics, and nonlinear dynamics." />
+  <meta name="twitter:image" content="https://amitdawadi.com/profile.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Amit Dawadi",
+    "url": "https://amitdawadi.com/",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Clark University"
+    },
+    "jobTitle": "PhD Candidate in Physics",
+    "sameAs": [
+      "https://www.linkedin.com/in/amit-dawadi/",
+      "https://scholar.google.com/AmitDawadi"
+    ]
+  }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px; /* Applying your remembered setting for better PC compatibility */
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #fafafa;
+      color: #222;
+      box-sizing: border-box; /* Ensures padding is included in element's total width */
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      /* background-image removed from here, now handled by slideshow */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 150px 20px;
+      border-radius: 10px;
+      position: relative; /* Needed for overlay and slideshow */
+      overflow: hidden; /* Ensures overlay doesn't spill out */
+    }
+
+    /* Slideshow Container */
+    .slideshow-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0; /* Behind header content and overlay */
+    }
+
+    .slideshow-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Cover the entire area */
+      opacity: 0; /* Hidden by default */
+      transition: opacity 1.5s ease-in-out; /* Smooth transition */
+    }
+
+    .slideshow-container img.active {
+      opacity: 1; /* Show active image */
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+      z-index: 1;
+    }
+    header h1, header p {
+      position: relative; /* Bring text above the overlay */
+      z-index: 2;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 2.8rem;
+      margin: 0;
+    }
+    /* Nav styles */
+    .navbar {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px solid #28a745;
+      background-color: #d4edda;
+      margin-bottom: 20px;
+    }
+    .navbar .nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex; /* Display main nav items horizontally */
+      justify-content: center;
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    .navbar .nav li {
+      position: relative; /* Needed for dropdown positioning */
+      margin: 0 10px; /* Space between main nav items */
+    }
+    .navbar .nav li a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 5px 10px;
+      display: block; /* Make the whole area clickable */
+    }
+    .navbar .nav li a:hover {
+      text-decoration: underline;
+    }
+    .navbar .nav .highlight-tab strong {
+      color: #c40000; /* Highlight color for "About Me" */
+    }
+
+    /* Dropdown styles */
+    .dropdown-content {
+      display: none; /* Hidden by default */
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 10; /* Ensure dropdown appears above other content */
+      border-radius: 5px;
+      left: 50%; /* Center dropdown relative to parent */
+      transform: translateX(-50%); /* Adjust for centering */
+      top: 100%; /* Position below the parent link */
+      padding: 5px 0;
+    }
+    .dropdown-content li {
+      margin: 0; /* Remove margin for dropdown list items */
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 8px 15px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      font-size: 1rem;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      text-decoration: none;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block; /* Show dropdown on hover */
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .highlight-tab {
+      font-weight: bold;
+      color: #c40000;
+    }
+    .section-box {
+      max-width: 1000px; /* Max width for inner content */
+      margin: 40px auto; /* Adjust margin for section boxes */
+      padding: 20px;
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+    .cv-container hr, .inner-cv-content-box hr { /* Combine HR styles */
+      border: none;
+      border-top: 2px solid #007BFF;
+      margin: 20px 0;
+    }
+    .cv-container h2, .contact-section h3 { /* Combine heading styles for consistency */
+      color: #007BFF;
+    }
+    .cv-container ul {
+      padding-left: 20px;
+    }
+    .button-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap; /* Allow buttons to wrap */
+    }
+    .button-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .button-links a:hover {
+      background-color: #0056b3;
+    }
+    .button-and-image-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap; /* Allow content to wrap */
+      text-align: center; /* Center text if content wraps */
+    }
+    .passport-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #007BFF;
+    }
+    .inner-cv-content-box {
+      max-width: 850px;
+      margin: auto;
+      padding: 20px;
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+    .blue-hr {
+      border: none;
+      border-top: 2px solid blue;
+      width: 100%;
+    }
+    .contact-info-text {
+      text-align: center;
+      font-size: 20px;
+    }
+    .text-center {
+      text-align: center;
+    }
+
+    /* Homepage specific flex sections */
+    .blue-box {
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #e6f2ff; /* Light blue background for the welcome text */
+      margin-top: 20px;
+      text-align: left; /* Align text within the box */
+    }
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+      justify-content: center; /* Center items when wrapped */
+      gap: 30px; /* Space between columns */
+      margin-top: 30px;
+    }
+    .flex-col {
+      flex: 1 1 calc(50% - 20px); /* Two columns, considering gap */
+      max-width: calc(50% - 20px); /* Ensures two columns on wider screens */
+      text-align: center;
+      box-sizing: border-box; /* Include padding/border in width calculation */
+      display: flex; /* Use flexbox for content within column */
+      flex-direction: column; /* Stack image/video and paragraph */
+      align-items: center; /* Center items horizontally within the column */
+    }
+    .flex-col img, .flex-col iframe {
+      width: 100%; /* Make images and iframes fill their container */
+      height: auto; /* Maintain aspect ratio for images */
+      max-width: 100%; /* Ensure they don't overflow */
+      display: block; /* Remove extra space below images/iframes */
+      margin-bottom: 10px; /* Space below image/video and before caption */
+      border-radius: 10px; /* Inherit border-radius from item */
+    }
+
+    /* --- Styles for Contact Page (kept for completeness from your code) --- */
+    .contact-container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+
+    .contact-section h3 {
+      color: #007BFF;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+    }
+
+    .contact-columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .contact-columns > div {
+      flex: 1;
+      min-width: 300px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .contact-columns iframe {
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .contact-columns p {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .contact-columns strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .social-links {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .social-links li {
+      margin: 0;
+    }
+
+    .social-links a {
+      display: inline-block;
+      padding: 8px 15px;
+      background-color: #007acc;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background-color: #0056b3;
+      text-decoration: none;
+    }
+
+    /* --- Responsive Styles for the NEW homepage content --- */
+
+    /* General adjustments for smaller screens */
+    @media (max-width: 768px) {
+      body {
+        margin: 20px auto; /* Reduce margin on smaller screens */
+        padding: 0 15px;
+      }
+      header h1 {
+        font-size: 2.2rem; /* Adjust heading size */
+      }
+      /* Nav adjustments for smaller screens */
+      .navbar .nav {
+        flex-direction: column; /* Stack nav items vertically on smaller screens */
+        align-items: center; /* Center them when stacked */
+      }
+      .navbar .nav li {
+        margin: 5px 0; /* Adjust vertical spacing */
+      }
+      .navbar .nav li a {
+        width: 100%; /* Make links take full width for easier tapping */
+        font-size: 0.95rem;
+        text-align: center;
+      }
+      .dropdown-content {
+        position: static; /* Stack dropdown content below parent on small screens */
+        display: block; /* Always show dropdown content on small screens if parent is clicked/focused */
+        width: 100%;
+        box-shadow: none;
+        transform: translateX(0); /* Remove centering transform */
+        background-color: transparent; /* Transparent background for stacked items */
+        padding: 0;
+        border-top: 1px solid rgba(0,0,0,0.1); /* Separator */
+      }
+      .dropdown-content a {
+        padding: 5px 20px; /* Adjust padding for sub-items */
+        font-size: 0.9rem;
+        color: #007acc; /* Keep link color */
+        background-color: #e6f2ff; /* Light background for dropdown items */
+        border-radius: 0; /* No border-radius for stacked items */
+      }
+      .dropdown:hover .dropdown-content {
+        display: block; /* Keep dropdown content visible on hover for desktop, but not needed for mobile */
+      }
+      /* Ensure dropdown items are always shown on mobile for simplicity */
+      .dropdown-content {
+        display: block; /* Always show dropdown items on small screens */
+      }
+
+      .section-box, .contact-container { /* Apply to all main content boxes */
+        padding: 15px; /* Reduce padding for content wrappers */
+      }
+      .flex-row {
+        gap: 20px; /* Reduce gap between columns on smaller screens */
+      }
+      .flex-col {
+        flex: 1 1 100%; /* Make image/video columns stack on small screens */
+        max-width: 100%; /* Ensure they take full width */
+      }
+      .button-links {
+        flex-direction: column; /* Stack buttons vertically */
+        align-items: center;
+        gap: 10px;
+      }
+      .button-links a {
+        width: 80%; /* Make buttons wider for easier tapping */
+        max-width: 250px; /* Prevent them from getting too wide */
+      }
+      .button-and-image-container {
+        flex-direction: column; /* Stack image and buttons */
+      }
+      .contact-columns {
+        flex-direction: column; /* Stack columns vertically on smaller screens */
+        align-items: center; /* Center stacked columns */
+      }
+      .contact-columns > div {
+        min-width: unset; /* Remove min-width when stacking */
+        width: 100%; /* Take full width */
+        max-width: 450px; /* Limit width for readability on very wide mobile screens */
+      }
+      .social-links {
+        justify-content: center; /* Keep social links centered */
+      }
+    }
+
+    /* Media query for even smaller screens (e.g., mobile phones) */
+    @media (max-width: 480px) {
+      body {
+        padding: 0 10px;
+      }
+      header h1 {
+        font-size: 1.8rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+      .navbar {
+        padding: 10px;
+      }
+      .navbar .nav li a {
+        font-size: 0.95rem;
+      }
+      .section-box, .contact-container {
+        padding: 10px;
+        margin: 20px auto;
+      }
+      .blue-box {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <ul class="nav">
+    <li class="dropdown">
+      <a href="https://amitdawadi.github.io/adphys.github.io/" class="highlight-tab"><strong>Home</strong></a>
+      <ul class="dropdown-content">
+        <li> <a href="https://amitdawadi.github.io/adphys.github.io/" class="highlight-tab">About Me</a></li>
+        <li> <a href="https://amitdawadi.github.io/adphys.github.io/CV/">CV</a></li>
+        <li><a href="https://amitdawadi.github.io/adphys.github.io/Contact/">Contact</a></li>
+      </ul>
+    </li>
+    <li><a href="https://amitdawadi.github.io/adphys.github.io/Research/">Research</a></li>
+    <li><a href="https://amitdawadi.github.io/adphys.github.io/Publications/">Publications</a></li>
+    <li><a href="https://amitdawadi.github.io/adphys.github.io/Outreach/">Outreach</a></li>
+  </ul>
+</nav>
+
+  <header>
+    <div class="slideshow-container">
+      <img src="image1.jpg" alt="Slideshow Image 1" class="active">
+      <img src="image2.jpg" alt="Slideshow Image 2">
+      <img src="image3.jpg" alt="Slideshow Image 3">
+      <img src="image4.jpg" alt="Slideshow Image 4">
+      <img src="image5.jpg" alt="Slideshow Image 5">
+    </div>
+    <h1>Amit Dawadi</h1>
+    <p><em>PhD Candidate – Complex Matter & Nonlinear Physics</em></p>
+  </header>
+
+  <div class="section-box">
+    <div style="text-align: center; margin-top: 20px;">
+      <h2>Welcome!</h2>
+      <div class="blue-box">
+        <p>Welcome to my webpage! I am <a href="https://www.linkedin.com/in/amit-dawadi/" target="_blank" rel="noreferrer noopener">Amit Dawadi</a>,
+          a PhD student in physics at <a href="https://www.clarku.edu/departments/physics/phd-program/" target="_blank" rel="noreferrer noopener">Clark University</a>.
+          I am working in the <a href="https://physics.clarku.edu/~akudrolli/nls.html?_gl=1*ex48t7*_gcl_au*OTk5OTczNzc0LjE3NDQ3NTk3MzU." target="_blank" rel="noreferrer noopener">Nonlinear Physics Laboratory</a> led by Prof.
+          <a href="https://scholar.google.com/citations?user=lf3bda0AAAAJ&hl=en&oi=ao">Arshad Kudrolli</a>. My research focuses on understanding complex matter where structure, geometry, and mechanics lead to emergent behaviors.
+          This includes <a href="https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.6.043206" target="_blank" rel="noreferrer noopener">crumpling phenomena in thin sheets</a>, <a href="https://doi.org/10.1103/d782-cbmc" target="_blank" rel="noreferrer noopener">
+          twisting and bundling of elastic filaments</a>, the mechanical response of soft and structured materials, as well as the intriguing <a href="https://arxiv.org/abs/2412.16010" target="_blank" rel="noreferrer noopener">self-propulsion of
+          floating ice blocks</a> driven by melting processes. As a passionate researcher and an APS Student Ambassador, I am equally committed to both cutting-edge physics research and scientific outreach to broader audiences.</p>
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <div class="flex-col">
+        <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg"
+              alt="Paper folding" />
+      </div>
+      <div class="flex-col">
+        <img src="1732648516824.jpg"
+              alt="3D Reconstruction" />
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <div class="flex-col">
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/gV8p-eqMbmg?autoplay=1&mute=1&loop=1&playlist=gV8p-eqMbmg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+      <div class="flex-col">
+        <iframe width="100%" height="250"
+          src="https://www.youtube.com/embed/BqIOAtTPoWI?autoplay=1&mute=1&loop=1&playlist=BqIOAtTPoWI"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Amit Dawadi</p>
+    <p>Email: <script>const user = 'adawadi'; const domain = 'clarku.edu'; document.write('<a href="mailto:' + user + '@' + domain + '">' + user + '@' + domain + '</a>');</script></p>
+  </footer>
+
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slideshow-container img');
+    const totalSlides = slides.length;
+
+    function showSlides() {
+      // Hide all slides
+      slides.forEach(slide => slide.classList.remove('active'));
+
+      // Increment slide index, reset if at end
+      slideIndex++;
+      if (slideIndex > totalSlides) {
+        slideIndex = 1;
+      }
+
+      // Show current slide
+      slides[slideIndex - 1].classList.add('active');
+
+      // Call showSlides again after 5 seconds
+      setTimeout(showSlides, 5000); // Change image every 5 seconds (5000 milliseconds)
+    }
+
+    // Start the slideshow when the page loads
+    window.onload = showSlides;
+  </script>
+</body>
+</html>
