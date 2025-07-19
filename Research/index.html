@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+ <html lang="en">
+ <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Amit Dawadi is a physics PhD candidate at Clark University. His work focuses on soft matter, mechanics, and experimental physics including crumpling, filament twisting, and granular materials." />
@@ -195,14 +195,16 @@
     }
     .image-grid {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+      flex-wrap: nowrap; /* Ensure images stay in a single row */
+      justify-content: space-between; /* Distribute space evenly */
+      gap: 10px; /* Adjust gap as needed */
       margin-top: 20px;
+      overflow-x: auto; /* Enable horizontal scrolling if needed */
     }
     .image-grid-item {
-      flex: 1 1 calc(33.333% - 20px); /* For a three-column layout, accounting for gap */
-      max-width: calc(33.333% - 20px); /* Ensures three columns on wider screens */
+      flex: 0 0 auto; /* Don't grow or shrink, take up only necessary width */
+      width: calc(33.333% - 10px); /* Adjust width based on the number of images and gap */
+      max-width: none; /* Override previous max-width */
       text-align: center;
       box-sizing: border-box;
     }
@@ -246,8 +248,8 @@
     /* General adjustments for smaller screens */
     @media (max-width: 1024px) { /* Adjust breakpoint for larger tablets/smaller desktops if needed */
       .image-grid-item {
-        flex: 1 1 calc(50% - 20px); /* Two columns on medium screens */
-        max-width: calc(50% - 20px);
+        flex: 0 0 calc(50% - 10px); /* Two columns on medium screens */
+        width: calc(50% - 10px);
       }
     }
 
@@ -305,9 +307,12 @@
         padding: 15px;
         margin: 20px auto;
       }
+      .image-grid {
+        overflow-x: auto; /* Keep horizontal scrolling */
+      }
       .image-grid-item {
-        flex: 1 1 100%; /* Stack image grid items on smaller screens */
-        max-width: 100%;
+        flex: 0 0 calc(50% - 10px); /* Two columns on smaller screens */
+        width: calc(50% - 10px);
       }
       /* Ensure other flex elements also stack if present on this page */
       .button-links, .button-and-image-container, .contact-columns {
@@ -351,13 +356,17 @@
         padding: 10px;
         margin: 15px auto;
       }
+      .image-grid-item {
+        flex: 0 0 calc(100% - 10px); /* Single column on very small screens */
+        width: calc(100% - 10px);
+      }
       .image-caption {
         font-size: 0.8em;
       }
     }
   </style>
-</head>
-<body>
+ </head>
+ <body>
   <nav class="navbar">
     <ul class="nav">
       <li class="dropdown">
@@ -436,7 +445,7 @@
         </div>
         <div class="image-grid-item">
           <img src="inclination.png" alt="Inclination angles" />
-          <p><strong>Figure 6:</strong> The mid sectino of the bundle from x-Ray images are integrated and 
+          <p><strong>Figure 6:</strong> The mid sectino of the bundle from x-Ray images are integrated and
             rendered. The colorbar showing the inclination angle of filament with vertical line parallel to the axis of twist. </p>
         </div>
       </div>
@@ -458,5 +467,5 @@
       document.write('<a href="mailto:' + user + '@' + domain + '">' + user + '@' + domain + '</a>');
     </script> </p>
   </footer>
-</body>
-</html>
+ </body>
+ </html>
