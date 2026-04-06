@@ -444,89 +444,66 @@ architecture in shaping collective mechanical response.
 
       <img src="picture2 (1).png" alt="Experimental setup for twisting" class="img-center" />
       <div class="image-caption"><strong>Figure 1:</strong> Experimental setup for twisting (left) and custom-made laser profilometer (right)</div>
-<div class="image-grid"
-     style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px;">
 
-  <div class="image-grid-item" style="grid-column: span 2; text-align:center;">
-    <img src="FIGURE1_IMAGE.jpg" alt="Figure 1" style="max-width:100%; height: auto; border-radius: 8px;" />
-    <p>
-      <strong>Figure 1:</strong> Overview of the twisting and profilometry setup
-    </p>
+  <!-- Row 1: full-width spanning image -->
+  <div style="grid-column: span 2; text-align: center;">
+    <img src="FIGURE1_IMAGE.jpg" alt="Figure 1"
+         style="width: 100%; height: auto; border-radius: 8px; display: block;" />
+    <p><strong>Figure 1:</strong> Overview of the twisting and profilometry setup</p>
   </div>
 
-  <div class="image-grid-item">
-    <img src="2023_physics_lab_folding_paper_jul25-11-4.jpg" 
-         alt="Twisting in progress" 
+  <!-- Row 2: two equal images -->
+  <div style="min-width: 0; text-align: center;">
+    <img src="2023_physics_lab_folding_paper_jul25-11-4.jpg"
+         alt="Twisting in progress"
          style="width: 100%; height: auto; display: block; border-radius: 8px;" />
     <p>
       <strong>Figure 2:</strong> Twisting under progress
-      <a href="https://www.youtube.com/watch?v=gV8p-eqMbmg&t=9s" target="_blank">
-        (Click to watch the video)
-      </a>
+      <a href="https://www.youtube.com/watch?v=gV8p-eqMbmg&t=9s" target="_blank">(Click to watch the video)</a>
     </p>
   </div>
 
-  <div class="image-grid-item">
-    <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg" 
-         alt="After twist" 
+  <div style="min-width: 0; text-align: center;">
+    <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg"
+         alt="After twist"
          style="width: 100%; height: auto; display: block; border-radius: 8px;" />
     <p><strong>Figure 3:</strong> After twist</p>
   </div>
 
-  <div class="image-grid-item">
+  <!-- Row 3: interactive widget + image, equal width -->
+  <div style="min-width: 0;">
     <div class="scanner-wrap"
-         style="background:#e0e0e0; border:1px solid #ccc;
-                border-radius:12px; padding:20px; font-family:sans-serif;">
-
-      <h3 style="margin-top:0; text-align:center; font-size:1.05em;">
-        Figure 4: Laser Profilometer Schematic
-      </h3>
-
+         style="background:#e0e0e0; border:1px solid #ccc; border-radius:12px; padding:20px; font-family:sans-serif;">
+      <h3 style="margin-top:0; text-align:center; font-size:1.05em;">Figure 4: Laser Profilometer Schematic</h3>
       <div id="profiler-viewport"
-           style="width:100%; height:400px; background:#111;
-                  border-radius:6px; position:relative; overflow:hidden;">
-
+           style="width:100%; height:400px; background:#111; border-radius:6px; position:relative; overflow:hidden;">
         <div style="position:absolute; top:10px; left:10px; width:160px; height:100px;
-                    background:#000; border:1px solid #ff0000;
-                    border-radius:4px; z-index:10;">
-          <div style="color:#ff0000; font-size:8px; padding:4px;
-                      font-weight:bold; background:#1a1a1a;">
+                    background:#000; border:1px solid #ff0000; border-radius:4px; z-index:10;">
+          <div style="color:#ff0000; font-size:8px; padding:4px; font-weight:bold; background:#1a1a1a;">
             Cross‑section profile
           </div>
           <canvas id="sensorCanvas" width="160" height="80"></canvas>
         </div>
-
       </div>
-
-      <div style="margin-top:10px; background:#d8d8d8;
-                  padding:15px; border-radius:8px;">
+      <div style="margin-top:10px; background:#d8d8d8; padding:15px; border-radius:8px;">
         <input type="range" id="xSlider" min="-50" max="50" value="-50" step="0.1"
                style="width:100%; margin-bottom:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <button id="autoBtn"
-                  style="padding:8px 16px; background:#d43f3a;
-                         color:white; border:none; border-radius:4px;
-                         font-weight:bold; font-size:12px;">
-            STOP SCAN
-          </button>
-          <div id="posReadout"
-               style="font-family:monospace; font-weight:bold;
-                      color:#444; font-size:12px;">
-            −50.00 mm
-          </div>
+                  style="padding:8px 16px; background:#d43f3a; color:white; border:none;
+                         border-radius:4px; font-weight:bold; font-size:12px;">STOP SCAN</button>
+          <div id="posReadout" style="font-family:monospace; font-weight:bold; color:#444; font-size:12px;">−50.00 mm</div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <div class="image-grid-item" style="display: flex; flex-direction: column; justify-content: flex-start;">
-    <img src="1732648516824.jpg" 
-         alt="3D Reconstruction" 
-         style="width: 100%; height: auto; border-radius: 8px; display: block;" />
-    <p style="margin-top: 10px;">
-      <strong>Figure 5:</strong> 3D reconstructed surface obtained from laser‑sheet profilometry
-    </p>
+  <div style="min-width: 0; text-align: center;">
+    <img src="1732648516824.jpg"
+         alt="3D Reconstruction"
+         style="width: 100%; height: auto; display: block; border-radius: 8px;" />
+    <p style="margin-top: 10px;"><strong>Figure 5:</strong> 3D reconstructed surface obtained from laser‑sheet profilometry</p>
   </div>
 
 </div>
