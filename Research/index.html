@@ -460,29 +460,22 @@ architecture in shaping collective mechanical response.
         </div>
       </div>
 
-      <div class="content-section" style="border-color: #d9534f; background: #fff;">
-    <h3 class="text-center">Interactive Scan Simulation</h3>
-    <p style="font-size: 0.9em; color: #555;">
-        This simulation replicates the fixed-optics gantry in <strong>Figure 1</strong>. The laser and camera are stationary; move the slider to translate the stage and observe the raw optical data deformation.
-    </p>
+    <div class="scanner-wrap" style="background:#fcfcfc; border:1px solid #ddd; border-radius:8px; padding:25px; margin:2rem 0; font-family:sans-serif;">
+    <h3 style="margin-top:0; text-align:center; color:#333;">Fixed Gantry Profilometer Simulation</h3>
     
-    <div id="three-container" style="width:100%; height:500px; background:#050505; border-radius:8px; position:relative; overflow:hidden;">
-        <div style="position:absolute; top:15px; right:15px; width:220px; height:150px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10; box-shadow: 0 0 15px rgba(255,0,0,0.3);">
-            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#111; letter-spacing:1px;">RAW CAMERA SENSOR (35° TILT)</div>
-            <canvas id="cameraCanvas" width="220" height="120"></canvas>
-        </div>
-        
-        <div style="position:absolute; bottom:10px; left:10px; color:rgba(255,255,255,0.5); font-size:11px; pointer-events:none;">
-            Fixed Laser: X=0 | Fixed Camera: 35° Triangulation
+    <div id="three-container" style="width:100%; height:500px; background:#050505; border-radius:4px; position:relative;">
+        <div style="position:absolute; top:15px; right:15px; width:200px; height:130px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10; box-shadow: 0 0 15px rgba(255,0,0,0.2);">
+            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#111;">RAW OPTICAL DATA (35° TILT)</div>
+            <canvas id="cameraCanvas" width="200" height="100"></canvas>
         </div>
     </div>
 
-    <div style="margin-top:20px; background:#f0f0f0; padding:20px; border-radius:8px;">
+    <div style="margin-top:20px; background:#f5f5f5; padding:20px; border-radius:8px; border:1px solid #eee;">
         <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <label style="font-weight:bold; font-size:14px; color:#333;">Stage Translation (Scanning)</label>
-            <span id="stagePosLabel" style="font-family:monospace; font-weight:bold; color:#d9534f;">-50.00 mm</span>
+            <label style="font-weight:bold; font-size:14px; color:#555;">Stage Translation (X-Axis)</label>
+            <span id="stagePos" style="font-family:monospace; font-weight:bold; color:#007BFF;">-50.00 mm</span>
         </div>
-        <input type="range" id="stageSlider" min="-50" max="50" value="-50" step="0.1" style="width:100%; height:10px; cursor:pointer;">
+        <input type="range" id="stageSlider" min="-50" max="50" value="-50" step="0.05" style="width:100%; height:8px; cursor:pointer;">
     </div>
 </div>
       <p>At first, the deformations are highly random, but after many cycles, the sheet begins to form repeatable patterns in the same regions — indicating that the sheet "remembers" its past deformations.
@@ -625,107 +618,90 @@ architecture in shaping collective mechanical response.
     </script> </p>
   </footer>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    (function() {
-        const container = document.getElementById('three-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(35, container.clientWidth / 500, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(container.clientWidth, 500);
-        container.appendChild(renderer.domElement);
+    const container = document.getElementById('three-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / 500, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, 500);
+    container.appendChild(renderer.domElement);
 
-        // 1. FIXED HARDWARE (Laser and Camera stay still)
-        const laserHead = new THREE.Mesh(new THREE.BoxGeometry(4, 6, 4), new THREE.MeshStandardMaterial({color: 0x333333}));
-        laserHead.position.set(0, 70, 0);
-        scene.add(laserHead);
+    // 1. FIXED OPTICS: Laser Projector and Camera Models
+    const laserBox = new THREE.Mesh(new THREE.BoxGeometry(4, 8, 4), new THREE.MeshStandardMaterial({color: 0x222222}));
+    laserBox.position.set(0, 80, 0); // Fixed directly above
+    scene.add(laserBox);
 
-        const camBody = new THREE.Mesh(new THREE.BoxGeometry(5, 5, 10), new THREE.MeshStandardMaterial({color: 0x111111}));
-        camBody.position.set(65, 55, 0);
-        camBody.lookAt(0, 5, 0);
-        scene.add(camBody);
+    const cameraBox = new THREE.Mesh(new THREE.BoxGeometry(5, 5, 8), new THREE.MeshStandardMaterial({color: 0x222222}));
+    cameraBox.position.set(60, 60, 0); // Fixed at triangulation angle
+    cameraBox.lookAt(0, 0, 0);
+    scene.add(cameraBox);
 
-        // Vertical Laser Sheet (visual plane)
-        const laserSheet = new THREE.Mesh(
-            new THREE.PlaneGeometry(0.5, 120), 
-            new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.2, side: THREE.DoubleSide })
-        );
-        laserSheet.rotation.y = Math.PI / 2;
-        scene.add(laserSheet);
+    const laserPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.3, 100), 
+        new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.3, side: THREE.DoubleSide })
+    );
+    laserPlane.rotation.y = Math.PI / 2;
+    scene.add(laserPlane);
 
-        // 2. THE TRANSLATING STAGE
-        const stageGroup = new THREE.Group();
-        const base = new THREE.Mesh(new THREE.BoxGeometry(110, 3, 70), new THREE.MeshStandardMaterial({color: 0x111111}));
-        base.position.y = -1.5;
-        stageGroup.add(base);
+    // 2. THE MOVING STAGE & CRUMPLED SHEET
+    const stageGroup = new THREE.Group();
+    const platform = new THREE.Mesh(new THREE.BoxGeometry(110, 2, 70), new THREE.MeshStandardMaterial({color: 0x111111}));
+    platform.position.y = -1;
+    stageGroup.add(platform);
 
-        // CRUMPLED SHEET (White, Diffuse, Faceted)
-        const sheetGeo = new THREE.PlaneGeometry(100, 60, 80, 80);
-        const sheetMat = new THREE.MeshStandardMaterial({ 
-            color: 0xffffff, 
-            roughness: 0.95, 
-            flatShading: true 
-        });
-        
-        const posAttr = sheetGeo.attributes.position;
-        const creaseMap = []; // Store heights for the 2D canvas logic
-        for (let i = 0; i < posAttr.count; i++) {
-            let x = posAttr.getX(i);
-            let y = posAttr.getY(i);
-            // Multi-octave "crumple" function
-            let z = Math.abs(Math.sin(x*0.12)) * 5 + Math.abs(Math.cos(y*0.18)) * 4;
-            z += Math.sin((x+y)*0.3) * 1.5;
-            posAttr.setZ(i, z);
+    const sheetGeo = new THREE.PlaneGeometry(100, 60, 60, 60);
+    const sheetMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9, flatShading: true });
+    
+    const posAttr = sheetGeo.attributes.position;
+    for (let i = 0; i < posAttr.count; i++) {
+        let x = posAttr.getX(i); let y = posAttr.getY(i);
+        // Create sharp 'Mylar' creases using absolute trig and noise
+        let z = Math.abs(Math.sin(x*0.15)) * 5 + Math.abs(Math.cos(y*0.2)) * 3;
+        z += (Math.random() - 0.5) * 1.5; // Micro-roughness
+        posAttr.setZ(i, z);
+    }
+    const sheet = new THREE.Mesh(sheetGeo, sheetMat);
+    sheet.rotation.x = -Math.PI / 2;
+    stageGroup.add(sheet);
+    scene.add(stageGroup);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    const spot = new THREE.PointLight(0xffffff, 0.8);
+    spot.position.set(100, 100, 100);
+    scene.add(spot);
+
+    camera.position.set(120, 100, 140);
+    camera.lookAt(0, 0, 0);
+
+    const slider = document.getElementById('stageSlider');
+    const cCanvas = document.getElementById('cameraCanvas');
+    const cCtx = cCanvas.getContext('2d');
+
+    function animate() {
+        requestAnimationFrame(animate);
+        let xOffset = parseFloat(slider.value);
+        stageGroup.position.x = -xOffset; // Sheet translates, Laser stays at 0
+        document.getElementById('stagePos').innerText = xOffset.toFixed(2) + " mm";
+
+        // Draw Camera View (Intersection Profile)
+        cCtx.fillStyle = "#000";
+        cCtx.fillRect(0,0,200,100);
+        cCtx.strokeStyle = "#ff0000";
+        cCtx.lineWidth = 2;
+        cCtx.beginPath();
+        for(let j = -30; j <= 30; j += 1) {
+            let sampleX = xOffset;
+            let sampleY = j;
+            let z = Math.abs(Math.sin(sampleX*0.15)) * 5 + Math.abs(Math.cos(sampleY*0.2)) * 3;
+            let drawX = (j + 30) * 3.3;
+            let drawY = 80 - (z * 6 + (xOffset * 0.1)); // Simulated triangulation shift
+            if(j === -30) cCtx.moveTo(drawX, drawY); else cCtx.lineTo(drawX, drawY);
         }
-        const sheet = new THREE.Mesh(sheetGeo, sheetMat);
-        sheet.rotation.x = -Math.PI / 2;
-        stageGroup.add(sheet);
-        scene.add(stageGroup);
-
-        // LIGHTING
-        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(50, 100, 50);
-        scene.add(dirLight);
-
-        camera.position.set(130, 90, 130);
-        camera.lookAt(0, 0, 0);
-
-        const slider = document.getElementById('stageSlider');
-        const cCanvas = document.getElementById('cameraCanvas');
-        const cCtx = cCanvas.getContext('2d');
-
-        function animate() {
-            requestAnimationFrame(animate);
-            let val = parseFloat(slider.value);
-            // Move the stage, keep optics fixed
-            stageGroup.position.x = -val; 
-            document.getElementById('stagePosLabel').innerText = val.toFixed(2) + " mm";
-
-            // Update 2D Raw Data Feed (The Triangulation Line)
-            cCtx.fillStyle = "#000";
-            cCtx.fillRect(0,0,220,120);
-            cCtx.strokeStyle = "#ff0000";
-            cCtx.lineWidth = 2;
-            cCtx.shadowBlur = 5;
-            cCtx.shadowColor = "red";
-            cCtx.beginPath();
-            
-            for(let j = -30; j <= 30; j += 0.5) {
-                // Height sample at the laser intersection point (X=0 in world space)
-                let sampleX = val; // Because stage is moved by -val, the sheet point at world 0 is stage val
-                let sampleY = j;
-                let h = Math.abs(Math.sin(sampleX*0.12)) * 5 + Math.abs(Math.cos(sampleY*0.18)) * 4 + Math.sin((sampleX+sampleY)*0.3) * 1.5;
-                
-                let px = (j + 30) * 3.6;
-                // Height + Perspective shift (Triangulation)
-                let py = 100 - (h * 6 + (val * 0.15)); 
-                if(j === -30) cCtx.moveTo(px, py); else cCtx.lineTo(px, py);
-            }
-            cCtx.stroke();
-            renderer.render(scene, camera);
-        }
-        animate();
-    })();
+        cCtx.stroke();
+        renderer.render(scene, camera);
+    }
+    animate();
 </script>
 </body>
 </html>
