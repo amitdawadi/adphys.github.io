@@ -464,8 +464,8 @@ architecture in shaping collective mechanical response.
     <h3 style="margin-top:0; text-align:center; color:#333;">Fixed-Gantry Laser Profilometer</h3>
     
     <div id="profiler-viewport" style="width:100%; height:550px; background:#111; border-radius:6px; position:relative; overflow:hidden;">
-        <div style="position:absolute; top:20px; right:20px; width:220px; height:140px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10;">
-            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#1a1a1a;">CAMERA SENSOR (40°)</div>
+        <div style="position:absolute; top:20px; left:20px; width:220px; height:140px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10;">
+            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#1a1a1a;">Cross-section profile </div>
             <canvas id="sensorCanvas" width="220" height="110"></canvas>
         </div>
     </div>
@@ -476,7 +476,7 @@ architecture in shaping collective mechanical response.
                 <label style="font-weight:bold; font-size:14px; display:block; margin-bottom:8px;">Manual Stage Control (mm)</label>
                 <input type="range" id="xSlider" min="-50" max="50" value="-50" step="0.1" style="width:100%;">
             </div>
-            <button id="autoBtn" style="padding:12px 24px; background:#d43f3a; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; min-width:140px;">ENABLE AUTOPLAY</button>
+            <button id="autoBtn" style="padding:12px 24px; background:#d43f3a; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; min-width:140px;">STOP SCAN</button>
         </div>
         <div style="text-align:right; font-family:monospace; font-weight:bold; color:#444;" id="posReadout">-50.00 mm</div>
     </div>
@@ -687,7 +687,7 @@ architecture in shaping collective mechanical response.
     const slider = document.getElementById('xSlider');
     const autoBtn = document.getElementById('autoBtn');
     const sCtx = document.getElementById('sensorCanvas').getContext('2d');
-    let isAuto = false;
+    let isAuto = true;
     let time = 0;
 
     autoBtn.onclick = () => {
