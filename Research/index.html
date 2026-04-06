@@ -445,41 +445,45 @@ architecture in shaping collective mechanical response.
       <img src="picture2 (1).png" alt="Experimental setup for twisting" class="img-center" />
       <div class="image-caption"><strong>Figure 1:</strong> Experimental setup for twisting (left) and custom-made laser profilometer (right)</div>
 
-      <div class="image-grid">
-        <div class="image-grid-item">
-          <img src="2023_physics_lab_folding_paper_jul25-11-4.jpg" alt="Twisting in progress" />
-          <p><strong>Figure 2:</strong> Twisting under progress<a href="https://www.youtube.com/watch?v=gV8p-eqMbmg&t=9s" target="_blank"> (Click to watch the video)</a></p>
-        </div>
-        <div class="image-grid-item">
-          <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg" alt="After twist" />
-          <p><strong>Figure 3:</strong> After twist</p>
-        </div>
-        <div class="image-grid-item">
-          <img src="1732648516824.jpg" alt="3D Reconstruction" />
-          <p><strong>Figure 4:</strong> 3D reconstruction of a crumpled sheet obtained using a custom-built laser profilometer</p>
-        </div>
+   <div class="image-grid">
+  <div class="image-grid-item">
+    <img src="2023_physics_lab_folding_paper_jul25-11-4.jpg" alt="Twisting in progress" />
+    <p><strong>Figure 2:</strong> Twisting under progress<a href="https://www.youtube.com/watch?v=gV8p-eqMbmg&t=9s" target="_blank"> (Click to watch the video)</a></p>
+  </div>
+  
+  <div class="image-grid-item">
+    <img src="2023_physics_lab_folding_paper_jul25-2-2.jpg" alt="After twist" />
+    <p><strong>Figure 3:</strong> After twist</p>
+  </div>
+  
+  <div class="image-grid-item">
+    <img src="1732648516824.jpg" alt="3D Reconstruction" />
+    <p><strong>Figure 4:</strong> 3D reconstruction of a crumpled sheet</p>
+  </div>
+
+  <div class="image-grid-item">
+    </div>
+
+  <div class="image-grid-item" style="grid-column: span 2;"> 
+    <div class="scanner-wrap" style="background:#e0e0e0; border:1px solid #ccc; border-radius:12px; padding:20px; margin:0; font-family:sans-serif;">
+      <h3 style="margin-top:0; text-align:center; color:#333; font-size: 1.1em;">Figure 5: Profilometer Schematic</h3>
+      
+      <div id="profiler-viewport" style="width:100%; height:400px; background:#111; border-radius:6px; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:10px; left:10px; width:160px; height:100px; background:#000; border:1px solid #ff0000; border-radius:4px; z-index:10;">
+              <div style="color:#ff0000; font-size:8px; padding:4px; font-weight:bold; background:#1a1a1a;">Cross-section profile</div>
+              <canvas id="sensorCanvas" width="160" height="80"></canvas>
+          </div>
       </div>
 
-   <div class="scanner-wrap" style="background:#e0e0e0; border:1px solid #ccc; border-radius:12px; padding:30px; margin:2rem 0; font-family:sans-serif;">
-    <h3 style="margin-top:0; text-align:center; color:#333;">Fixed-Gantry Laser Profilometer</h3>
-    
-    <div id="profiler-viewport" style="width:100%; height:550px; background:#111; border-radius:6px; position:relative; overflow:hidden;">
-        <div style="position:absolute; top:20px; left:20px; width:220px; height:140px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10;">
-            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#1a1a1a;">Cross-section profile </div>
-            <canvas id="sensorCanvas" width="220" height="110"></canvas>
-        </div>
+      <div style="margin-top:10px; background:#d8d8d8; padding:15px; border-radius:8px;">
+          <input type="range" id="xSlider" min="-50" max="50" value="-50" step="0.1" style="width:100%; margin-bottom: 10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <button id="autoBtn" style="padding:8px 16px; background:#d43f3a; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size: 12px;">STOP SCAN</button>
+            <div style="font-family:monospace; font-weight:bold; color:#444; font-size: 12px;" id="posReadout">-50.00 mm</div>
+          </div>
+      </div>
     </div>
-
-    <div style="margin-top:20px; background:#d8d8d8; padding:25px; border-radius:8px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <div style="flex-grow:1; margin-right:20px;">
-                <label style="font-weight:bold; font-size:14px; display:block; margin-bottom:8px;">Manual Stage Control (mm)</label>
-                <input type="range" id="xSlider" min="-50" max="50" value="-50" step="0.1" style="width:100%;">
-            </div>
-            <button id="autoBtn" style="padding:12px 24px; background:#d43f3a; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; min-width:140px;">STOP SCAN</button>
-        </div>
-        <div style="text-align:right; font-family:monospace; font-weight:bold; color:#444;" id="posReadout">-50.00 mm</div>
-    </div>
+  </div>
 </div>
       <p>At first, the deformations are highly random, but after many cycles, the sheet begins to form repeatable patterns in the same regions — indicating that the sheet "remembers" its past deformations.
         We quantify this memory effect by measuring the curvature field and the total crease length using laser profilometry and track how these quantities evolve over hundreds of twisting cycles.</p>
