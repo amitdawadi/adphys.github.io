@@ -460,22 +460,25 @@ architecture in shaping collective mechanical response.
         </div>
       </div>
 
-   <div class="scanner-wrap" style="background:#e0e0e0; border:1px solid #ccc; border-radius:8px; padding:25px; margin:2rem 0; font-family:sans-serif;">
-    <h3 style="margin-top:0; text-align:center; color:#333;">Laser Profilometer: Volumetric Fan & Surface Intersection</h3>
+   <div class="scanner-wrap" style="background:#e0e0e0; border:1px solid #ccc; border-radius:12px; padding:30px; margin:2rem 0; font-family:sans-serif;">
+    <h3 style="margin-top:0; text-align:center; color:#333;">Fixed-Gantry Laser Profilometer</h3>
     
-    <div id="three-container" style="width:100%; height:500px; background:#111; border-radius:4px; position:relative;">
-        <div style="position:absolute; top:15px; right:15px; width:200px; height:130px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10;">
-            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#111;">SENSOR DATA</div>
-            <canvas id="cameraCanvas" width="200" height="100"></canvas>
+    <div id="profiler-viewport" style="width:100%; height:550px; background:#111; border-radius:6px; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:20px; right:20px; width:220px; height:140px; background:#000; border:2px solid #ff0000; border-radius:4px; z-index:10;">
+            <div style="color:#ff0000; font-size:10px; padding:6px; font-weight:bold; background:#1a1a1a;">CAMERA SENSOR (40°)</div>
+            <canvas id="sensorCanvas" width="220" height="110"></canvas>
         </div>
     </div>
 
-    <div style="margin-top:20px; background:#d0d0d0; padding:20px; border-radius:8px; border:1px solid #bbb;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <label style="font-weight:bold; font-size:14px; color:#444;">Translation Stage (X)</label>
-            <span id="stagePos" style="font-family:monospace; font-weight:bold; color:#d43f3a;">-50.00 mm</span>
+    <div style="margin-top:20px; background:#d8d8d8; padding:25px; border-radius:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <div style="flex-grow:1; margin-right:20px;">
+                <label style="font-weight:bold; font-size:14px; display:block; margin-bottom:8px;">Manual Stage Control (mm)</label>
+                <input type="range" id="xSlider" min="-50" max="50" value="-50" step="0.1" style="width:100%;">
+            </div>
+            <button id="autoBtn" style="padding:12px 24px; background:#d43f3a; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; min-width:140px;">ENABLE AUTOPLAY</button>
         </div>
-        <input type="range" id="stageSlider" min="-50" max="50" value="-50" step="0.1" style="width:100%; cursor:pointer;">
+        <div style="text-align:right; font-family:monospace; font-weight:bold; color:#444;" id="posReadout">-50.00 mm</div>
     </div>
 </div>
       <p>At first, the deformations are highly random, but after many cycles, the sheet begins to form repeatable patterns in the same regions — indicating that the sheet "remembers" its past deformations.
@@ -620,123 +623,105 @@ architecture in shaping collective mechanical response.
      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    (function() {
-        const container = document.getElementById('three-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(40, container.clientWidth / 500, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(container.clientWidth, 500);
-        container.appendChild(renderer.domElement);
+(function() {
+    const container = document.getElementById('profiler-viewport');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / 550, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, 550);
+    container.appendChild(renderer.domElement);
 
-        // 1. FIXED OPTICS
-        const sourcePos = new THREE.Vector3(0, 80, 0);
-        const laserHead = new THREE.Mesh(new THREE.BoxGeometry(4, 4, 4), new THREE.MeshStandardMaterial({color: 0x222222}));
-        laserHead.position.copy(sourcePos);
-        scene.add(laserHead);
+    // 1. FIXED OPTICS
+    const laserSource = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 6), new THREE.MeshStandardMaterial({color: 0x333333}));
+    laserSource.position.set(0, 85, 0);
+    scene.add(laserSource);
 
-        // TRIANGULAR LASER FAN (The "Light Sheet")
-        const fanGeo = new THREE.BufferGeometry();
-        // Define triangle: Top (Source), Bottom-Left (Z=-35), Bottom-Right (Z=35)
-        const vertices = new Float32Array([
-            0, 80, 0,    // Top
-            0, 0, -35,   // Left
-            0, 0, 35     // Right
-        ]);
-        fanGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-        const fanMat = new THREE.MeshBasicMaterial({ 
-            color: 0xff0000, 
-            transparent: true, 
-            opacity: 0.25, 
-            side: THREE.DoubleSide 
-        });
-        const laserFan = new THREE.Mesh(fanGeo, fanMat);
-        scene.add(laserFan);
+    // Detailed 40° Camera Model
+    const camGroup = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.BoxGeometry(6, 6, 12), new THREE.MeshStandardMaterial({color: 0x111111}));
+    const lens = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 4), new THREE.MeshStandardMaterial({color: 0x000000}));
+    lens.rotation.x = Math.PI/2; lens.position.z = -7;
+    camGroup.add(body); camGroup.add(lens);
+    camGroup.position.set(65, 55, 0); 
+    camGroup.lookAt(0, 5, 0); // Aimed at scan line
+    scene.add(camGroup);
 
-        // 2. THE MOVING STAGE & CRUMPLED SHEET
-        const stageGroup = new THREE.Group();
-        const platform = new THREE.Mesh(new THREE.BoxGeometry(110, 2, 75), new THREE.MeshStandardMaterial({color: 0x050505}));
-        platform.position.y = -1;
-        stageGroup.add(platform);
+    // Laser Triangle Fan
+    const fanGeo = new THREE.BufferGeometry();
+    const fanVertices = new Float32Array([0,85,0, 0,0,-35, 0,0,35]);
+    fanGeo.setAttribute('position', new THREE.BufferAttribute(fanVertices, 3));
+    const laserFan = new THREE.Mesh(fanGeo, new THREE.MeshBasicMaterial({color: 0xff0000, transparent:true, opacity:0.3, side:THREE.DoubleSide}));
+    scene.add(laserFan);
 
-        const sheetGeo = new THREE.PlaneGeometry(100, 60, 100, 100);
-        const sheetMat = new THREE.MeshStandardMaterial({ 
-            color: 0xffffff, 
-            roughness: 0.9, 
-            flatShading: true 
-        });
-        
-        // Displacement Function for Crumpled Look
-        const posAttr = sheetGeo.attributes.position;
-        for (let i = 0; i < posAttr.count; i++) {
-            let x = posAttr.getX(i); let y = posAttr.getY(i);
-            let z = Math.abs(Math.sin(x*0.14)) * 6 + Math.abs(Math.cos(y*0.22)) * 4;
-            z += Math.sin((x+y)*0.35) * 1.5;
-            posAttr.setZ(i, z);
+    // 2. MOVING STAGE & PAPER
+    const stage = new THREE.Group();
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(110, 2, 75), new THREE.MeshStandardMaterial({color: 0x0a0a0a}));
+    plate.position.y = -1.1;
+    stage.add(plate);
+
+    const sheetGeo = new THREE.PlaneGeometry(100, 65, 120, 120);
+    const sheetMat = new THREE.MeshStandardMaterial({color: 0xffffff, roughness: 1.0, flatShading: true});
+    
+    const pos = sheetGeo.attributes.position;
+    for(let i=0; i<pos.count; i++) {
+        let x = pos.getX(i); let y = pos.getY(i);
+        let z = Math.abs(Math.sin(x*0.13)) * 6 + Math.abs(Math.cos(y*0.2)) * 4 + (Math.random()*0.5);
+        pos.setZ(i, z);
+    }
+    const paper = new THREE.Mesh(sheetGeo, sheetMat);
+    paper.rotation.x = -Math.PI/2;
+    stage.add(paper);
+    scene.add(stage);
+
+    // LIGHTING
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    const scanLight = new THREE.PointLight(0xffffff, 0.8);
+    scanLight.position.set(40, 100, 40);
+    scene.add(scanLight);
+
+    camera.position.set(130, 100, 140);
+    camera.lookAt(0, 0, 0);
+
+    const slider = document.getElementById('xSlider');
+    const autoBtn = document.getElementById('autoBtn');
+    const sCtx = document.getElementById('sensorCanvas').getContext('2d');
+    let isAuto = false;
+    let time = 0;
+
+    autoBtn.onclick = () => {
+        isAuto = !isAuto;
+        autoBtn.innerText = isAuto ? "STOP SCAN" : "ENABLE AUTOPLAY";
+        autoBtn.style.background = isAuto ? "#333" : "#d43f3a";
+    };
+
+    function animate() {
+        requestAnimationFrame(animate);
+        if(isAuto) {
+            time += 0.015;
+            slider.value = Math.sin(time) * 50;
         }
-        const sheet = new THREE.Mesh(sheetGeo, sheetMat);
-        sheet.rotation.x = -Math.PI / 2;
-        stageGroup.add(sheet);
-        scene.add(stageGroup);
+        let xVal = parseFloat(slider.value);
+        stage.position.x = -xVal;
+        document.getElementById('posReadout').innerText = xVal.toFixed(2) + " mm";
 
-        // INTERSECTION LINE (High-intensity glow on sheet)
-        const lineGeo = new THREE.BufferGeometry();
-        const linePoints = new Float32Array(200 * 3); 
-        lineGeo.setAttribute('position', new THREE.BufferAttribute(linePoints, 3));
-        const lineMat = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 3 });
-        const laserLine = new THREE.Line(lineGeo, lineMat);
-        scene.add(laserLine);
-
-        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-        const spot = new THREE.DirectionalLight(0xffffff, 0.6);
-        spot.position.set(50, 100, 50);
-        scene.add(spot);
-
-        camera.position.set(130, 90, 130);
-        camera.lookAt(0, 0, 0);
-
-        const slider = document.getElementById('stageSlider');
-        const cCtx = document.getElementById('cameraCanvas').getContext('2d');
-
-        function animate() {
-            requestAnimationFrame(animate);
-            let xOffset = parseFloat(slider.value);
-            stageGroup.position.x = -xOffset; 
-            document.getElementById('stagePos').innerText = xOffset.toFixed(2) + " mm";
-
-            // Update Intersection Line Coordinates
-            const lp = laserLine.geometry.attributes.position.array;
-            for(let j = 0; j < 100; j++) {
-                let zPos = (j / 100) * 60 - 30; // Sample across width
-                let sampleX = xOffset;
-                let h = Math.abs(Math.sin(sampleX*0.14)) * 6 + Math.abs(Math.cos(zPos*0.22)) * 4 + Math.sin((sampleX+zPos)*0.35) * 1.5;
-                
-                lp[j*3] = 0;      // Fixed X plane
-                lp[j*3+1] = h;    // Dynamic Height
-                lp[j*3+2] = zPos; // Across width
-            }
-            laserLine.geometry.attributes.position.needsUpdate = true;
-
-            // Update Camera Feed Inset
-            cCtx.fillStyle = "#000";
-            cCtx.fillRect(0,0,200,100);
-            cCtx.strokeStyle = "#ff0000";
-            cCtx.lineWidth = 2;
-            cCtx.beginPath();
-            for(let j = 0; j < 100; j++) {
-                let zPos = (j / 100) * 60 - 30;
-                let sampleX = xOffset;
-                let h = Math.abs(Math.sin(sampleX*0.14)) * 6 + Math.abs(Math.cos(zPos*0.22)) * 4 + Math.sin((sampleX+zPos)*0.35) * 1.5;
-                let dx = j * 2;
-                let dy = 80 - (h * 5 + (xOffset * 0.15));
-                if(j === 0) cCtx.moveTo(dx, dy); else cCtx.lineTo(dx, dy);
-            }
-            cCtx.stroke();
-
-            renderer.render(scene, camera);
+        // Update Sensor Line
+        sCtx.fillStyle = "#000"; sCtx.fillRect(0,0,220,110);
+        sCtx.strokeStyle = "#ff0000"; sCtx.lineWidth = 2;
+        sCtx.beginPath();
+        for(let j=0; j<110; j++) {
+            let ySamp = (j/110)*65 - 32.5;
+            let h = Math.abs(Math.sin(xVal*0.13)) * 6 + Math.abs(Math.cos(ySamp*0.2)) * 4;
+            let drawX = j * 2;
+            let drawY = 85 - (h * 5.5 + (xVal * 0.12)); // Triangulation perspective
+            if(j===0) sCtx.moveTo(drawX, drawY); else sCtx.lineTo(drawX, drawY);
         }
-        animate();
-    })();
+        sCtx.stroke();
+        renderer.render(scene, camera);
+    }
+    animate();
+})();
 </script>
 </body>
 </html>
