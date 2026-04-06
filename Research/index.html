@@ -644,6 +644,22 @@ architecture in shaping collective mechanical response.
     const lens = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 4), new THREE.MeshStandardMaterial({color:0xffffff}));
     lens.rotation.x = Math.PI/2; lens.position.z = -7;
     camGroup.add(body); camGroup.add(lens);
+  // --- ADDED: CAMERA LABEL ---
+const labelCanvas = document.createElement('canvas');
+const ctx = labelCanvas.getContext('2d');
+labelCanvas.width = 256; labelCanvas.height = 64;
+ctx.font = "Bold 44px Arial";
+ctx.fillStyle = "#ff0000";
+ctx.textAlign = "center";
+ctx.fillText("CAMERA", 128, 45);
+
+const labelSprite = new THREE.Sprite(new THREE.SpriteMaterial({ 
+    map: new THREE.CanvasTexture(labelCanvas) 
+}));
+labelSprite.scale.set(20, 5, 1);
+labelSprite.position.set(0, -12, 0); // Positioned directly below the camera body
+camGroup.add(labelSprite);
+// --- END OF ADDITION ---
     camGroup.position.set(65, 55, 0); 
     camGroup.lookAt(0, 5, 0); // Aimed at scan line
     scene.add(camGroup);
