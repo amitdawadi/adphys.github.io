@@ -20,7 +20,19 @@
   <meta name="twitter:title" content="PhD Candidate – Complex Matter & Nonlinear Physics" />
   <meta name="twitter:description" content="Physics PhD candidate exploring soft matter, mechanics, and nonlinear dynamics." />
   <meta name="twitter:image" content="https://amitdawadi.com/profile.jpg" />
-
+<script>
+if (
+location.pathname !== "/" &&
+!location.pathname.endsWith("/") &&
+!location.pathname.includes(".")
+) {
+location.replace(
+location.pathname + "/" +
+location.search +
+location.hash
+);
+}
+</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
