@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Profilometry Setup - Direct Labels</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #ffffff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+        .hint {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #666666; 
+            font-size: 14px;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 5px 0;
+        }
+    </style>
+    <!-- Three.js and OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    
+    <div class="hint">Left Click + Drag to rotate | Scroll to zoom</div>
+
+    <div id="canvas-container"></div>
+
+    <script>
+        // ==========================================
+        // Helper Function: Create 3D Text Sprites with Custom Colors
+        // ==========================================
+        function createTextLabel(message, textColor, strokeColor = 'rgba(255, 255, 255, 0.9)') {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 512;
+            canvas.height = 128;
+
+            context.font = 'bold 44px "Segoe UI", Arial, sans-serif';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            
+            // Draw thick outline (white by default) to ensure it pops against dark objects
+            context.lineWidth = 8;
+            context.strokeStyle = strokeColor;
+            context.strokeText(message, canvas.width / 2, canvas.height / 2);
+            
+            // Draw solid text inside the outline
+            context.fillStyle = textColor;
+            context.fillText(message, canvas.width / 2, canvas.height / 2);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const spriteMaterial = new THREE.SpriteMaterial({ map: texture, depthTest: false });
+            const sprite = new THREE.Sprite(spriteMaterial);
+            sprite.scale.set(3.5, 0.875, 1);
+            return sprite;
+        }
+
+        // 1. Scene Setup
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0xffffff, 0.02); 
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(12, 10, 12); 
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.target.set(0, 0, 0);
+
+        // 2. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); 
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        directionalLight.position.set(5, 10, 7);
+        scene.add(directionalLight);
+        const backLight = new THREE.PointLight(0xffffff, 0.5);
+        backLight.position.set(-5, 5, -5);
+        scene.add(backLight);
+
+        // 3. Translation Stage
+        const stageGroup = new THREE.Group();
+        scene.add(stageGroup);
+
+        const stageGeo = new THREE.BoxGeometry(8, 0.2, 8);
+        const stageMat = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.7 });
+        const stage = new THREE.Mesh(stageGeo, stageMat);
+        stageGroup.add(stage);
+
+        // Add Red label to the translation stage
+        const tableLabel = createTextLabel("Translating Table", "#ff0000");
+        tableLabel.position.set(0, -0.6, 4.5); 
+        stageGroup.add(tableLabel);
+
+        // ==========================================
+        // 4. CORRUGATED SHEET
+        // ==========================================
+        const gridRes = 150; 
+        const mylarGeo = new THREE.PlaneGeometry(6, 6, gridRes, gridRes);
+        const pos = mylarGeo.attributes.position;
+        const sheetHeight = 0.6; 
+        
+        for(let i = 0; i < pos.count; i++) {
+            let py = pos.getY(i);
+            let normalizedY = (py + 3.0) / 6.0;
+            let z = Math.sin(normalizedY * Math.PI * 8); 
+            z = ((z + 1.0) / 2.0) * sheetHeight;
+            pos.setZ(i, z);
+        }
+        mylarGeo.computeVertexNormals(); 
+        
+        const mylarMat = new THREE.MeshStandardMaterial({ 
+            color: 0xffffff,
+            roughness: 0.8,
+            metalness: 0.1,
+            side: THREE.DoubleSide
+        });
+
+        // CUSTOM SHADER: MATLAB Bone Colormap + Red Laser Intersect
+        mylarMat.onBeforeCompile = function (shader) {
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <common>',
+                `#include <common>\n varying vec3 vWorldPos;\n varying float vLocalHeight;`
+            ).replace(
+                '#include <worldpos_vertex>',
+                `#include <worldpos_vertex>\n 
+                vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;\n 
+                vLocalHeight = position.z;`
+            );
+
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <common>',
+                `#include <common>\n 
+                varying vec3 vWorldPos;\n 
+                varying float vLocalHeight;\n
+                
+                vec3 getBoneColor(float t) {
+                    t = clamp(t, 0.0, 1.0);
+                    vec3 c1 = vec3(0.0, 0.0, 0.0);
+                    vec3 c2 = vec3(0.328, 0.328, 0.453);
+                    vec3 c3 = vec3(0.656, 0.781, 0.781);
+                    vec3 c4 = vec3(1.0, 1.0, 1.0);
+                    
+                    if(t < 0.375) return mix(c1, c2, t / 0.375);
+                    if(t < 0.75)  return mix(c2, c3, (t - 0.375) / 0.375);
+                    return mix(c3, c4, (t - 0.75) / 0.25);
+                }`
+            ).replace(
+                '#include <color_fragment>',
+                `#include <color_fragment>\n
+                float heightT = clamp(vLocalHeight / 0.6, 0.0, 1.0);
+                diffuseColor.rgb = getBoneColor(heightT);`
+            ).replace(
+                '#include <dithering_fragment>',
+                `#include <dithering_fragment>\n
+                float dist = abs(vWorldPos.x);
+                float intensity = smoothstep(0.04, 0.005, dist);
+                gl_FragColor = mix(gl_FragColor, vec4(1.0, 0.0, 0.0, 1.0), intensity);`
+            );
+        };
+
+        const corrugatedSheet = new THREE.Mesh(mylarGeo, mylarMat);
+        corrugatedSheet.rotation.x = -Math.PI / 2;
+        corrugatedSheet.position.y = 0.5; 
+        stageGroup.add(corrugatedSheet);
+
+        // Add Red label to the sheet
+        const paperLabel = createTextLabel("Crumpled Paper", "#ff0000");
+        paperLabel.position.set(0, 1.8, 2.0); 
+        stageGroup.add(paperLabel);
+
+        // ==========================================
+        // 5. STEEL Laser Point Source & Fan
+        // ==========================================
+        const pointerGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.8, 16);
+        const pointerMat = new THREE.MeshStandardMaterial({ 
+            color: 0x888888, 
+            roughness: 0.3, 
+            metalness: 0.9 
+        });
+        const pointer = new THREE.Mesh(pointerGeo, pointerMat);
+        pointer.position.set(0, 6.4, 0);
+        scene.add(pointer);
+
+        // Add Red label to the laser source
+        const laserSourceLabel = createTextLabel("Laser Source", "#ff0000");
+        laserSourceLabel.position.set(0, 7.5, 0);
+        scene.add(laserSourceLabel);
+
+        const fanGeo = new THREE.BufferGeometry();
+        const vertices = new Float32Array([
+            0, 6.0, 0.0,     
+            0, 0.5, 4.0,     
+            0, 0.5, -4.0     
+        ]);
+        fanGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        const fanMat = new THREE.MeshBasicMaterial({ 
+            color: 0xff0022, transparent: true, opacity: 0.35, side: THREE.DoubleSide, blending: THREE.AdditiveBlending 
+        });
+        scene.add(new THREE.Mesh(fanGeo, fanMat));
+
+        // Add Solid Black label to the laser sheet
+        const laserSheetLabel = createTextLabel("Laser Sheet", "#000000");
+        laserSheetLabel.position.set(0, 3.5, 2.5);
+        scene.add(laserSheetLabel);
+
+        // ==========================================
+        // 6. Fixed 45-Degree Camera
+        // ==========================================
+        const physicalCameraGroup = new THREE.Group();
+        
+        const camBody = new THREE.Mesh(
+            new THREE.BoxGeometry(1.2, 1.0, 1.5), 
+            new THREE.MeshStandardMaterial({color: 0xcccccc, metalness: 0.6})
+        );
+        physicalCameraGroup.add(camBody);
+        
+        const camLensGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.8, 32);
+        const camLensMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const camLens = new THREE.Mesh(camLensGeo, camLensMat);
+        camLens.rotation.x = Math.PI / 2;
+        camLens.position.z = -0.9; 
+        physicalCameraGroup.add(camLens);
+
+        const screenGeo = new THREE.PlaneGeometry(0.8, 0.6);
+        const screenMat = new THREE.MeshBasicMaterial({ color: 0x0088ff, side: THREE.DoubleSide });
+        const screen = new THREE.Mesh(screenGeo, screenMat);
+        screen.position.z = 0.76; 
+        physicalCameraGroup.add(screen);
+
+        physicalCameraGroup.position.set(6, 6, 0); 
+        physicalCameraGroup.lookAt(0, 0, 0); 
+        physicalCameraGroup.rotateY(Math.PI);
+
+        // Add Red label directly to the camera group
+        const camLabel = createTextLabel("Camera", "#ff0000");
+        camLabel.position.set(0, 1.5, 0); 
+        physicalCameraGroup.add(camLabel);
+
+        scene.add(physicalCameraGroup);
+
+        const gridHelper = new THREE.GridHelper(20, 20, 0x999999, 0xdddddd);
+        gridHelper.position.y = -0.5;
+        scene.add(gridHelper);
+
+        // 7. Animation Loop
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            stageGroup.position.x = Math.sin(clock.getElapsedTime() * 0.8) * 2.5;
+            controls.update(); 
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
