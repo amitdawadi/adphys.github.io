@@ -279,32 +279,67 @@
       <h2>Showcasing custom opto-mechanical instrumentation, high-speed data acquisition, and automated metrology systems.</h2>
     </div>
 
-    <!-- Section 1 -->
+  <!-- Section 1 -->
     <div class="portfolio-item">
       <h3>1. Automated Opto-Mechanical Metrology & Testing Systems</h3>
-      <p>Operating at the intersection of physics and engineering, I built fully automated experimental test systems by integrating 
-        custom 3D-printed mechanics with precision stepper motors and data acquisition hardware. The video on the left demonstrates a custom stepper-motor-driven
-        torsional testing apparatus, which I designed and programmed to apply precise, cyclic twisting loads to thin elastoplastic sheets. This automated setup was critical for executing the hundreds of repeatable crumpling 
-        cycles detailed in the publication <em>Memory in Cyclically Crumpled Sheets</em> (Physical Review Research, 2024).</p>
-      <p>Complementing this mechanical testing rig is the custom 3D laser-sheet profilometer shown on the right. 
-        I developed this automated optical scanner to achieve a 50-micron spatial precision, enabling high-resolution topographical
-        mapping of the resulting 100-micron-thick crumpled structures. Together, these systems highlight a complete engineering pipeline
-        encompassing automated hardware control, custom mechanical design, and high-precision metrology.</p>
-      <div class="media-split-container">
+      <p>Operating at the intersection of physics and engineering, I built fully automated experimental test systems by integrating custom 3D-printed mechanics with precision stepper motors and data acquisition hardware. The video on the left demonstrates a custom stepper-motor-driven torsional testing apparatus, which I designed and programmed to apply precise, cyclic twisting loads to thin elastoplastic sheets. This automated setup was critical for executing the hundreds of repeatable crumpling cycles detailed in the publication <em>Memory in Cyclically Crumpled Sheets</em> (Physical Review Research, 2024).</p>
+      <p>Complementing this mechanical testing rig is the custom 3D laser-sheet profilometer shown on the right. I developed this automated optical scanner to achieve a 50-micron spatial precision, enabling high-resolution topographical mapping of the resulting 100-micron-thick crumpled structures. Together, these systems highlight a complete engineering pipeline encompassing automated hardware control, custom mechanical design, and high-precision metrology.</p>
+      
+      <!-- ROW 1: Video and Interactive Canvas -->
+      <div class="media-split-container" style="display: flex; gap: 20px; justify-content: center; align-items: stretch; margin-top: 20px; flex-wrap: wrap;">
         <!-- YouTube Video (Left Side) -->
-        <iframe
-    height= "450"
-    src="https://www.youtube.com/embed/gV8p-eqMbmg?autoplay=1&mute=1&loop=1&playlist=gV8p-eqMbmg"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
+        <iframe style="flex: 1; min-width: 300px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" height="450" src="https://www.youtube.com/embed/gV8p-eqMbmg?autoplay=1&mute=1&loop=1&playlist=gV8p-eqMbmg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         <!-- Live Interactive 3D Canvas (Right Side) -->
-        <iframe class="media-iframe" src="laser_scanner.html" title="Interactive 3D Laser Profilometry Setup" allowfullscreen></iframe>
+        <iframe style="flex: 1; min-width: 300px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: none; background-color: #f9f9f9;" height="450" class="media-iframe" src="laser_scanner.html" title="Interactive 3D Laser Profilometry Setup" allowfullscreen></iframe>
       </div>
-      <p style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 15px;">
+      <p style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 15px; margin-bottom: 30px;">
         <em><strong>Left:</strong> Automated stepper-motor torsional testing apparatus. <strong>Right:</strong> Interactive 3D schematic of the custom laser-sheet profilometer. Click and drag to explore the opto-mechanical layout used to achieve 50-micron scanning precision.</em>
       </p>
+
+      <!-- DOWNWARD ARROW 1 -->
+      <div style="display: flex; justify-content: center; align-items: center; padding: 20px 0;">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#007BFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="20"></line><polyline points="19 13 12 20 5 13"></polyline></svg>
+      </div>
+
+      <!-- ROW 2: The Systems Schematic -->
+      <div style="display: flex; justify-content: center; width: 100%;">
+        <div style="width: 100%; text-align: center;">
+          <img src="updated_setup_2.jpg" alt="Systems Engineering Schematic" style="width: 100%; max-width: 800px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 0 auto; display: block;" />
+          <p style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 15px;">
+            <em><strong>System Architecture:</strong> Closed-loop DAQ and hardware automation pipeline controlled via MATLAB.</em>
+          </p>
+        </div>
+      </div>
+
+      <!-- DOWNWARD ARROW 2 -->
+      <div style="display: flex; justify-content: center; align-items: center; padding: 30px 0 10px 0;">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#007BFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="20"></line><polyline points="19 13 12 20 5 13"></polyline></svg>
+      </div>
+
+      <!-- ROW 3: The Data Reconstruction Pipeline -->
+      <div style="display: flex; gap: 20px; justify-content: center; align-items: center; width: 100%; flex-wrap: wrap; margin-top: 10px;">
+        
+        <!-- Step 1: Raw Cross-section -->
+        <div style="flex: 1; min-width: 200px; min-height: 200px; background-color: #f0f0f0; border: 2px dashed #bbb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-weight: bold; text-align: center; padding: 20px;">
+          [Replace with image: Folded sheet with laser cross-section]
+        </div>
+
+        <!-- Step 2: Evolution -->
+        <div style="flex: 1; min-width: 200px; min-height: 200px; background-color: #f0f0f0; border: 2px dashed #bbb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-weight: bold; text-align: center; padding: 20px;">
+          [Replace with image: Evolution of cross-sections]
+        </div>
+
+        <!-- RIGHTWARD ARROW -->
+        <div style="display: flex; justify-content: center; align-items: center; padding: 10px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#007BFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+        </div>
+
+        <!-- Step 3: Final 3D Reconstruction -->
+        <div style="flex: 1.5; min-width: 250px; min-height: 200px; background-color: #f0f0f0; border: 2px dashed #bbb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-weight: bold; text-align: center; padding: 20px;">
+          [Replace with image: Final 3D Surface Reconstruction]
+        </div>
+
+      </div>
     </div>
 
     <!-- Section 2 -->
